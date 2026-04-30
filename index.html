@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Геометричний Тренажер</title>
+    <!-- Підключаємо Tailwind CSS для стилів -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Підключаємо React та Babel для обробки компонентів -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Framer Motion для анімацій -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <!-- Іконки Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-background text-foreground">
+        <div id="root"><div class="min-h-screen bg-[#020408] text-slate-200 font-sans p-4 lg:p-8 flex flex-col items-center overflow-x-hidden relative"><style>
+        @keyframes flowText {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+        .success-banner {
+          animation: flowText 15s linear infinite;
+        }
+        .svg-transition {
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        path.svg-transition {
+          transition: d 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      </style><div class="fixed right-8 top-8 z-[100] flex flex-col items-end"><div class="bg-black/40 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-2xl transition-all hover:border-white/30"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-timer text-amber-500 animate-pulse" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg><span class="text-2xl font-black text-white tabular-nums tracking-tighter">01:24</span></div><span class="text-[8px] font-black text-white/30 uppercase tracking-[0.3em] mt-2 mr-2">Тривалість сесії</span></div><div class="fixed right-8 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 z-[100] min-w-[80px]"><div class="flex items-center gap-3 w-full justify-start group"><div class="text-slate-500 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path></svg></div><span class="text-xl font-medium text-slate-500 tabular-nums">0</span></div><div class="flex items-center gap-3 w-full justify-start group"><div class="text-slate-500 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu" aria-hidden="true"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg></div><span class="text-xl font-medium text-slate-500 tabular-nums">0</span></div><div class="flex items-center gap-3 w-full justify-start group"><div class="text-slate-500 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></div><span class="text-xl font-medium text-slate-500 tabular-nums">0</span></div></div><div class="xl:hidden flex gap-6 mb-6 z-20 bg-black/40 p-4 rounded-3xl border border-white/10 backdrop-blur-md"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio text-slate-500" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path></svg><span class="text-lg font-medium text-slate-500">0</span></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu text-slate-500" aria-hidden="true"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg><span class="text-lg font-medium text-slate-500">0</span></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity text-slate-500" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><span class="text-lg font-medium text-slate-500">0</span></div></div><div class="flex items-center gap-2 mb-4 z-20"><div class="flex bg-slate-900/40 p-1 rounded-2xl border border-white/5 backdrop-blur-xl shadow-2xl"><button class="flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 text-amber-400 bg-white/10 shadow-lg shadow-black"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path></svg><span class="text-[11px] uppercase tracking-widest font-black">Базовий</span></button><button class="flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu" aria-hidden="true"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg><span class="text-[11px] uppercase tracking-widest font-black">Логіка</span></button><button class="flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><span class="text-[11px] uppercase tracking-widest font-black">Еліта</span></button></div><button class="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-amber-500 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all active:scale-95"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></button></div><div class="flex flex-col items-center w-full max-w-4xl relative z-10"><div data-tour="main-wheel" class="relative w-full max-w-[500px] aspect-square mb-2 flex items-center justify-center transition-transform duration-500"><svg viewBox="-360 -360 720 720" class="w-full h-full drop-shadow-2xl overflow-visible"><defs><radialGradient id="fieldGradient" cx="0" cy="0" r="240" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="currentColor" stop-opacity="0.8"></stop><stop offset="100%" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><mask id="fieldMask"><circle cx="0" cy="0" r="260" fill="url(#fieldGradient)"></circle></mask><linearGradient id="rayGradient" x1="0" y1="0" x2="250" y2="0" gradientUnits="userSpaceOnUse"><stop offset="70%" stop-color="white" stop-opacity="0.4"></stop><stop offset="95%" stop-color="#a1a1a1" stop-opacity="0.9"></stop></linearGradient></defs><circle cx="0" cy="0" r="250" fill="rgba(255, 0, 0,  0.6)" mask="url(#fieldMask)" class="transition-colors duration-1000"></circle><g class="svg-transition" transform="rotate(-98.1438099116359)"><line x1="0" y1="0" x2="250" y2="0" stroke="url(#rayGradient)" stroke-width="2"></line><circle cx="250" cy="0" r="4" fill="#a1a1a1"></circle></g><g class="svg-transition" transform="rotate(-53.1438099116359)"><line x1="0" y1="0" x2="250" y2="0" stroke="url(#rayGradient)" stroke-width="2"></line><circle cx="250" cy="0" r="4" fill="#a1a1a1"></circle></g><g class="svg-transition" transform="rotate(-21.1438099116359)"><line x1="0" y1="0" x2="250" y2="0" stroke="url(#rayGradient)" stroke-width="2"></line><circle cx="250" cy="0" r="4" fill="#a1a1a1"></circle></g><g class="svg-transition" transform="rotate(81.8561900883641)"><line x1="0" y1="0" x2="250" y2="0" stroke="url(#rayGradient)" stroke-width="2"></line><circle cx="250" cy="0" r="4" fill="#a1a1a1"></circle></g><g class="svg-transition" transform="rotate(126.8561900883641)"><line x1="0" y1="0" x2="250" y2="0" stroke="url(#rayGradient)" stroke-width="2"></line><circle cx="250" cy="0" r="4" fill="#a1a1a1"></circle></g><g class="svg-transition" transform="rotate(158.8561900883641)"><line x1="0" y1="0" x2="250" y2="0" stroke="url(#rayGradient)" stroke-width="2"></line><circle cx="250" cy="0" r="4" fill="#a1a1a1"></circle></g><text text-anchor="middle" dominant-baseline="middle" class="fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition" style="transform: translate(49.5898px, -193.755px);">A</text><text text-anchor="middle" dominant-baseline="middle" class="fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition" style="transform: translate(159.424px, -120.764px);">B</text><text text-anchor="middle" dominant-baseline="middle" class="fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition" style="transform: translate(172.58px, 101.075px);">C</text><text text-anchor="middle" dominant-baseline="middle" class="fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition" style="transform: translate(-49.5898px, 193.755px);">D</text><text text-anchor="middle" dominant-baseline="middle" class="fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition" style="transform: translate(-159.424px, 120.764px);">E</text><text text-anchor="middle" dominant-baseline="middle" class="fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition" style="transform: translate(-172.58px, -101.075px);">F</text><g class="svg-transition" style="transform: translate(-30.9937px, 121.097px);"><rect x="-22" y="-12" width="44" height="24" rx="4" class="fill-black/60 stroke-white/10"></rect><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="font-black text-[16px] pointer-events-none fill-white">45°</text></g><g class="svg-transition" style="transform: translate(-99.6403px, 75.4772px);"><rect x="-22" y="-12" width="44" height="24" rx="4" class="fill-black/60 stroke-white/10"></rect><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="font-black text-[16px] pointer-events-none fill-white">32°</text></g><g class="svg-transition" data-tour="target-label" style="transform: translate(-107.863px, -63.1718px);"><rect x="-22" y="-12" width="44" height="24" rx="4" class="fill-black/60 stroke-white/10"></rect><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="font-black text-[16px] pointer-events-none fill-white">?</text></g></svg><div class="absolute flex items-center justify-center z-40"><div class="w-[60px] h-[60px] rounded-full border flex items-center justify-center backdrop-blur-md transition-all duration-700 border-white/10 bg-slate-900/80 "><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock text-white/40" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div></div></div><div class="w-full max-w-xl px-4 z-50"><div class="bg-[#0a0c10] border border-white/10 p-6 rounded-[2rem] shadow-2xl"><div class="flex flex-col gap-4"><div class="flex-1 flex flex-col gap-1.5" data-tour="input-main"><div class="flex justify-between items-end px-1"><span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">Злам</span><span class="text-[10px] font-black uppercase tracking-widest text-amber-400">Кут F</span></div><div class="relative flex items-center bg-black/40 rounded-xl border transition-all duration-300 group border-white/10 focus-within:border-white/30"><div class="w-10 h-10 flex items-center justify-center rounded-l-xl border-r border-white/5 bg-white/5 text-amber-400"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path></svg></div><input type="text" inputmode="numeric" class="w-full bg-transparent px-3 py-2 text-lg font-black outline-none text-white placeholder-white/5" placeholder="---" value=""></div></div></div></div></div></div></div></div>
+        <script>
+            var App = (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __defProps = Object.defineProperties;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __propIsEnum = Object.prototype.propertyIsEnumerable;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+  var __spreadValues = (a, b) => {
+    for (var prop in b || (b = {}))
+      if (__hasOwnProp.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    if (__getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(b)) {
+        if (__propIsEnum.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      }
+    return a;
+  };
+  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+  var __objRest = (source, exclude) => {
+    var target = {};
+    for (var prop in source)
+      if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+        target[prop] = source[prop];
+    if (source != null && __getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(source)) {
+        if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+          target[prop] = source[prop];
+      }
+    return target;
+  };
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // react-globals:react
+  var require_react = __commonJS({
+    "react-globals:react"(exports, module) {
+      module.exports = window.React;
+    }
+  });
+
+  // <stdin>
+  var stdin_exports = {};
+  __export(stdin_exports, {
+    default: () => stdin_default
+  });
+  var import_react3 = __toESM(require_react());
+
+  // node_modules/lucide-react/dist/esm/createLucideIcon.js
+  var import_react2 = __toESM(require_react());
+
+  // node_modules/lucide-react/dist/esm/shared/src/utils.js
+  var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+  var toCamelCase = (string) => string.replace(
+    /^([A-Z])|[\s-_]+(\w)/g,
+    (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
+  );
+  var toPascalCase = (string) => {
+    const camelCase = toCamelCase(string);
+    return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+  };
+  var mergeClasses = (...classes) => classes.filter((className, index, array) => {
+    return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+  }).join(" ").trim();
+  var hasA11yProp = (props) => {
+    for (const prop in props) {
+      if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+        return true;
+      }
+    }
+  };
+
+  // node_modules/lucide-react/dist/esm/Icon.js
+  var import_react = __toESM(require_react());
+
+  // node_modules/lucide-react/dist/esm/defaultAttributes.js
+  var defaultAttributes = {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  };
+
+  // node_modules/lucide-react/dist/esm/Icon.js
+  var Icon = (0, import_react.forwardRef)(
+    (_a, ref) => {
+      var _b = _a, {
+        color = "currentColor",
+        size = 24,
+        strokeWidth = 2,
+        absoluteStrokeWidth,
+        className = "",
+        children,
+        iconNode
+      } = _b, rest = __objRest(_b, [
+        "color",
+        "size",
+        "strokeWidth",
+        "absoluteStrokeWidth",
+        "className",
+        "children",
+        "iconNode"
+      ]);
+      return (0, import_react.createElement)(
+        "svg",
+        __spreadValues(__spreadValues(__spreadProps(__spreadValues({
+          ref
+        }, defaultAttributes), {
+          width: size,
+          height: size,
+          stroke: color,
+          strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+          className: mergeClasses("lucide", className)
+        }), !children && !hasA11yProp(rest) && { "aria-hidden": "true" }), rest),
+        [
+          ...iconNode.map(([tag, attrs]) => (0, import_react.createElement)(tag, attrs)),
+          ...Array.isArray(children) ? children : [children]
+        ]
+      );
+    }
+  );
+
+  // node_modules/lucide-react/dist/esm/createLucideIcon.js
+  var createLucideIcon = (iconName, iconNode) => {
+    const Component = (0, import_react2.forwardRef)(
+      (_a, ref) => {
+        var _b = _a, { className } = _b, props = __objRest(_b, ["className"]);
+        return (0, import_react2.createElement)(Icon, __spreadValues({
+          ref,
+          iconNode,
+          className: mergeClasses(
+            `lucide-${toKebabCase(toPascalCase(iconName))}`,
+            `lucide-${iconName}`,
+            className
+          )
+        }, props));
+      }
+    );
+    Component.displayName = toPascalCase(iconName);
+    return Component;
+  };
+
+  // node_modules/lucide-react/dist/esm/icons/activity.js
+  var __iconNode = [
+    [
+      "path",
+      {
+        d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",
+        key: "169zse"
+      }
+    ]
+  ];
+  var Activity = createLucideIcon("activity", __iconNode);
+
+  // node_modules/lucide-react/dist/esm/icons/arrow-right.js
+  var __iconNode2 = [
+    ["path", { d: "M5 12h14", key: "1ays0h" }],
+    ["path", { d: "m12 5 7 7-7 7", key: "xquz4c" }]
+  ];
+  var ArrowRight = createLucideIcon("arrow-right", __iconNode2);
+
+  // node_modules/lucide-react/dist/esm/icons/chevron-right.js
+  var __iconNode3 = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+  var ChevronRight = createLucideIcon("chevron-right", __iconNode3);
+
+  // node_modules/lucide-react/dist/esm/icons/circle-check.js
+  var __iconNode4 = [
+    ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+    ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
+  ];
+  var CircleCheck = createLucideIcon("circle-check", __iconNode4);
+
+  // node_modules/lucide-react/dist/esm/icons/circle-help.js
+  var __iconNode5 = [
+    ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+    ["path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3", key: "1u773s" }],
+    ["path", { d: "M12 17h.01", key: "p32p05" }]
+  ];
+  var CircleHelp = createLucideIcon("circle-help", __iconNode5);
+
+  // node_modules/lucide-react/dist/esm/icons/cpu.js
+  var __iconNode6 = [
+    ["path", { d: "M12 20v2", key: "1lh1kg" }],
+    ["path", { d: "M12 2v2", key: "tus03m" }],
+    ["path", { d: "M17 20v2", key: "1rnc9c" }],
+    ["path", { d: "M17 2v2", key: "11trls" }],
+    ["path", { d: "M2 12h2", key: "1t8f8n" }],
+    ["path", { d: "M2 17h2", key: "7oei6x" }],
+    ["path", { d: "M2 7h2", key: "asdhe0" }],
+    ["path", { d: "M20 12h2", key: "1q8mjw" }],
+    ["path", { d: "M20 17h2", key: "1fpfkl" }],
+    ["path", { d: "M20 7h2", key: "1o8tra" }],
+    ["path", { d: "M7 20v2", key: "4gnj0m" }],
+    ["path", { d: "M7 2v2", key: "1i4yhu" }],
+    ["rect", { x: "4", y: "4", width: "16", height: "16", rx: "2", key: "1vbyd7" }],
+    ["rect", { x: "8", y: "8", width: "8", height: "8", rx: "1", key: "z9xiuo" }]
+  ];
+  var Cpu = createLucideIcon("cpu", __iconNode6);
+
+  // node_modules/lucide-react/dist/esm/icons/lock-open.js
+  var __iconNode7 = [
+    ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+    ["path", { d: "M7 11V7a5 5 0 0 1 9.9-1", key: "1mm8w8" }]
+  ];
+  var LockOpen = createLucideIcon("lock-open", __iconNode7);
+
+  // node_modules/lucide-react/dist/esm/icons/lock.js
+  var __iconNode8 = [
+    ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+    ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
+  ];
+  var Lock = createLucideIcon("lock", __iconNode8);
+
+  // node_modules/lucide-react/dist/esm/icons/radio.js
+  var __iconNode9 = [
+    ["path", { d: "M4.9 19.1C1 15.2 1 8.8 4.9 4.9", key: "1vaf9d" }],
+    ["path", { d: "M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5", key: "u1ii0m" }],
+    ["circle", { cx: "12", cy: "12", r: "2", key: "1c9p78" }],
+    ["path", { d: "M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5", key: "1j5fej" }],
+    ["path", { d: "M19.1 4.9C23 8.8 23 15.1 19.1 19", key: "10b0cb" }]
+  ];
+  var Radio = createLucideIcon("radio", __iconNode9);
+
+  // node_modules/lucide-react/dist/esm/icons/timer.js
+  var __iconNode10 = [
+    ["line", { x1: "10", x2: "14", y1: "2", y2: "2", key: "14vaq8" }],
+    ["line", { x1: "12", x2: "15", y1: "14", y2: "11", key: "17fdiu" }],
+    ["circle", { cx: "12", cy: "14", r: "8", key: "1e1u0o" }]
+  ];
+  var Timer = createLucideIcon("timer", __iconNode10);
+
+  // node_modules/lucide-react/dist/esm/icons/x.js
+  var __iconNode11 = [
+    ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+    ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+  ];
+  var X = createLucideIcon("x", __iconNode11);
+
+  // <stdin>
+  var useAudio = () => {
+    const audioCtx = (0, import_react3.useRef)(null);
+    const initAudio = () => {
+      if (!audioCtx.current) {
+        audioCtx.current = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    };
+    const playTone = (freq, type, duration, volume = 0.1) => {
+      initAudio();
+      const osc = audioCtx.current.createOscillator();
+      const gain = audioCtx.current.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.current.currentTime);
+      gain.gain.setValueAtTime(volume, audioCtx.current.currentTime);
+      gain.gain.exponentialRampToValueAtTime(1e-4, audioCtx.current.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.current.destination);
+      osc.start();
+      osc.stop(audioCtx.current.currentTime + duration);
+    };
+    return {
+      playClick: () => playTone(800, "sine", 0.1, 0.05),
+      playLevelShift: () => {
+        playTone(400, "square", 0.1, 0.03);
+        setTimeout(() => playTone(600, "square", 0.1, 0.03), 50);
+      },
+      playFieldSuccess: () => {
+        playTone(1e3, "sine", 0.2, 0.05);
+        playTone(1500, "sine", 0.2, 0.03);
+      },
+      playUnlock: () => {
+        [261, 329, 392, 523].forEach((f, i) => {
+          setTimeout(() => playTone(f, "sawtooth", 0.4, 0.03), i * 100);
+        });
+      }
+    };
+  };
+  var GuidedTour = ({ steps, onFinish }) => {
+    const [currentStep, setCurrentStep] = (0, import_react3.useState)(0);
+    const [coords, setCoords] = (0, import_react3.useState)({ top: 0, left: 0, width: 0, height: 0 });
+    const tooltipRef = (0, import_react3.useRef)(null);
+    (0, import_react3.useEffect)(() => {
+      const updateCoords = () => {
+        const element = document.querySelector(`[data-tour="${steps[currentStep].target}"]`);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          setCoords({
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height
+          });
+        }
+      };
+      updateCoords();
+      const timer = setTimeout(updateCoords, 100);
+      window.addEventListener("resize", updateCoords);
+      window.addEventListener("scroll", updateCoords);
+      return () => {
+        window.removeEventListener("resize", updateCoords);
+        window.removeEventListener("scroll", updateCoords);
+        clearTimeout(timer);
+      };
+    }, [currentStep, steps]);
+    const step = steps[currentStep];
+    const getTooltipStyle = () => {
+      const margin = 20;
+      const tooltipWidth = 320;
+      const tooltipHeight = 220;
+      let topPos = coords.top + coords.height + margin;
+      let leftPos = coords.left + coords.width / 2 - tooltipWidth / 2;
+      if (topPos + tooltipHeight > window.innerHeight) {
+        topPos = coords.top - tooltipHeight - margin;
+      }
+      if (topPos < margin) {
+        topPos = margin;
+      }
+      leftPos = Math.max(margin, Math.min(leftPos, window.innerWidth - tooltipWidth - margin));
+      return {
+        top: topPos,
+        left: leftPos,
+        width: `${tooltipWidth}px`
+      };
+    };
+    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "fixed inset-0 z-[200] pointer-events-none" }, /* @__PURE__ */ import_react3.default.createElement(
+      "div",
+      {
+        className: "absolute inset-0 bg-black/80 transition-all duration-500",
+        style: {
+          clipPath: `polygon(0% 0%, 0% 100%, ${coords.left}px 100%, ${coords.left}px ${coords.top}px, ${coords.left + coords.width}px ${coords.top}px, ${coords.left + coords.width}px ${coords.top + coords.height}px, ${coords.left}px ${coords.top + coords.height}px, ${coords.left}px 100%, 100% 100%, 100% 0%)`
+        }
+      }
+    ), /* @__PURE__ */ import_react3.default.createElement(
+      "div",
+      {
+        ref: tooltipRef,
+        className: "absolute bg-[#1a1d24] border border-amber-500/50 p-6 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto transition-all duration-500",
+        style: getTooltipStyle()
+      },
+      /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex justify-between items-start mb-3" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "bg-amber-500 text-black text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter" }, "\u041A\u0440\u043E\u043A ", currentStep + 1, "/", steps.length), /* @__PURE__ */ import_react3.default.createElement("button", { onClick: onFinish, className: "text-white/20 hover:text-white transition-colors" }, /* @__PURE__ */ import_react3.default.createElement(X, { size: 16 }))),
+      /* @__PURE__ */ import_react3.default.createElement("h4", { className: "text-white font-black text-lg mb-2 uppercase tracking-tight" }, step.title),
+      /* @__PURE__ */ import_react3.default.createElement("p", { className: "text-slate-400 text-sm leading-relaxed mb-6" }, step.content),
+      /* @__PURE__ */ import_react3.default.createElement(
+        "button",
+        {
+          onClick: () => currentStep < steps.length - 1 ? setCurrentStep((s) => s + 1) : onFinish(),
+          className: "w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-black uppercase tracking-widest text-[10px] rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-amber-500/10"
+        },
+        currentStep < steps.length - 1 ? "\u0414\u0430\u043B\u0456" : "\u041F\u043E\u0447\u0430\u0442\u0438 \u043C\u0456\u0441\u0456\u044E",
+        " ",
+        /* @__PURE__ */ import_react3.default.createElement(ChevronRight, { size: 14 })
+      )
+    ));
+  };
+  var InputField = ({ id, label, icon: Icon2, colorClass, placeholder, value, onChange, disabled, correctValue, stepLabel, tourId }) => {
+    const isCorrect = parseInt(value) === correctValue;
+    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex-1 flex flex-col gap-1.5", "data-tour": tourId }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex justify-between items-end px-1" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-[9px] font-bold text-white/30 uppercase tracking-widest" }, stepLabel), /* @__PURE__ */ import_react3.default.createElement("span", { className: `text-[10px] font-black uppercase tracking-widest ${colorClass}` }, label)), /* @__PURE__ */ import_react3.default.createElement("div", { className: `relative flex items-center bg-black/40 rounded-xl border transition-all duration-300 group ${isCorrect ? "border-amber-500 ring-4 ring-amber-500/10 shadow-[0_0_15px_rgba(245,158,11,0.2)]" : "border-white/10 focus-within:border-white/30"}` }, /* @__PURE__ */ import_react3.default.createElement("div", { className: `w-10 h-10 flex items-center justify-center rounded-l-xl border-r border-white/5 ${isCorrect ? "bg-amber-500 text-black" : `bg-white/5 ${colorClass}`}` }, isCorrect ? /* @__PURE__ */ import_react3.default.createElement(CircleCheck, { size: 18 }) : /* @__PURE__ */ import_react3.default.createElement(Icon2, { size: 18 })), /* @__PURE__ */ import_react3.default.createElement(
+      "input",
+      {
+        type: "text",
+        inputMode: "numeric",
+        value: value || "",
+        onChange: (e) => onChange(id, e.target.value),
+        className: "w-full bg-transparent px-3 py-2 text-lg font-black outline-none text-white placeholder-white/5",
+        placeholder,
+        disabled
+      }
+    )));
+  };
+  var ModeStat = ({ icon: Icon2, value }) => /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex items-center gap-3 w-full justify-start group" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "text-slate-500 transition-colors duration-300" }, /* @__PURE__ */ import_react3.default.createElement(Icon2, { size: 18 })), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-xl font-medium text-slate-500 tabular-nums" }, value));
+  var App = () => {
+    const [gameState, setGameState] = (0, import_react3.useState)("playing");
+    const [level, setLevel] = (0, import_react3.useState)("classic");
+    const [config, setConfig] = (0, import_react3.useState)(null);
+    const [inputs, setInputs] = (0, import_react3.useState)({});
+    const [rotation, setRotation] = (0, import_react3.useState)(-90);
+    const [showTour, setShowTour] = (0, import_react3.useState)(false);
+    const [viewedTours, setViewedTours] = (0, import_react3.useState)(/* @__PURE__ */ new Set());
+    const [missionStats, setMissionStats] = (0, import_react3.useState)({
+      classic: 0,
+      algebra: 0,
+      pro: 0
+    });
+    const [seconds, setSeconds] = (0, import_react3.useState)(0);
+    const [isTimerActive, setIsTimerActive] = (0, import_react3.useState)(true);
+    const sound = useAudio();
+    const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+    const themeColors = {
+      locked: "rgba(255, 0, 0,  0.6)",
+      unlocked: "rgba(251, 191, 36, 0.5)"
+    };
+    const RADIUS_VALUES = 125;
+    const RADIUS_LETTERS = 200;
+    const RAY_LENGTH = 250;
+    const RADIUS_ARC_Y = 285;
+    const RADIUS_LABEL_Y = 285;
+    const COMMON_STROKE_WIDTH = 2;
+    (0, import_react3.useEffect)(() => {
+      let interval = null;
+      if (isTimerActive) {
+        interval = setInterval(() => {
+          setSeconds((prev) => prev + 1);
+        }, 1e3);
+      }
+      return () => clearInterval(interval);
+    }, [isTimerActive]);
+    const formatTime = (totalSeconds) => {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    };
+    (0, import_react3.useEffect)(() => {
+      const saved = localStorage.getItem("geo_mission_tours");
+      if (saved) {
+        try {
+          setViewedTours(new Set(JSON.parse(saved)));
+        } catch (e) {
+          console.error("Cache load failed", e);
+        }
+      }
+    }, []);
+    (0, import_react3.useEffect)(() => {
+      localStorage.setItem("geo_mission_tours", JSON.stringify([...viewedTours]));
+    }, [viewedTours]);
+    (0, import_react3.useEffect)(() => {
+      if (!viewedTours.has(level)) {
+        const timer = setTimeout(() => {
+          setShowTour(true);
+          setViewedTours((prev) => /* @__PURE__ */ new Set([...prev, level]));
+        }, 800);
+        return () => clearTimeout(timer);
+      }
+    }, [level, viewedTours]);
+    const generateLevel = (0, import_react3.useCallback)((selectedLevel = level, isNewMission = true) => {
+      setInputs({});
+      setGameState("playing");
+      setLevel(selectedLevel);
+      if (isNewMission && config !== null) {
+        setMissionStats((prev) => __spreadProps(__spreadValues({}, prev), {
+          [level]: prev[level] + 1
+        }));
+      }
+      const randomTilt = Math.random() * 60 - 30;
+      setRotation(-90 + randomTilt);
+      if (selectedLevel === "classic") {
+        let success2 = false;
+        let attempt = 0;
+        while (!success2 && attempt < 50) {
+          attempt++;
+          const a1 = Math.floor(Math.random() * 46) + 10;
+          const a2Base = 180 - a1;
+          const convenient = [30, 45, 60, 90, 100, 110].filter((v) => v < a2Base - 15);
+          let baseAngles;
+          if (convenient.length > 0 && Math.random() > 0.4) {
+            const a3 = convenient[Math.floor(Math.random() * convenient.length)];
+            baseAngles = [a1, a3, 180 - a1 - a3];
+          } else {
+            baseAngles = [a1, 180 - a1];
+          }
+          const shuffledBase = [...baseAngles].sort(() => Math.random() - 0.5);
+          const allAngles = [...shuffledBase, ...shuffledBase];
+          const displayLabels = Array(allAngles.length).fill(null);
+          const halfSize = allAngles.length / 2;
+          const qIdx = Math.floor(Math.random() * allAngles.length);
+          displayLabels[qIdx] = "?";
+          const mirroredQIdx = (qIdx + halfSize) % allAngles.length;
+          const hintCount = allAngles.length === 6 ? 2 : 1;
+          const chosenHints = [];
+          let availableIndices = Array.from({ length: allAngles.length }, (_, i) => i).filter((idx) => idx !== qIdx);
+          if (allAngles.length === 6) {
+            availableIndices = availableIndices.filter((idx) => idx !== mirroredQIdx);
+          }
+          for (let i = 0; i < hintCount; i++) {
+            if (availableIndices.length === 0)
+              break;
+            const randIdx = Math.floor(Math.random() * availableIndices.length);
+            const selectedIdx = availableIndices[randIdx];
+            const mirroredSelectedIdx = (selectedIdx + halfSize) % allAngles.length;
+            chosenHints.push(selectedIdx);
+            availableIndices = availableIndices.filter((idx) => idx !== selectedIdx && idx !== mirroredSelectedIdx);
+          }
+          if (chosenHints.length < hintCount)
+            continue;
+          chosenHints.forEach((idx) => {
+            displayLabels[idx] = `${allAngles[idx]}\xB0`;
+          });
+          setConfig({ type: "classic", allAngles, displayLabels, targetAngleIdx: qIdx, answerValue: allAngles[qIdx] });
+          success2 = true;
+        }
+      } else {
+        const isPro = selectedLevel === "pro";
+        const k = Math.floor(Math.random() * 3) + 1;
+        const a1 = Math.floor(Math.random() * 25) + 15;
+        const a2 = k * a1;
+        const a3Choices = [30, 45, 60, 80, 90, 100, 110].filter((v) => v < 180 - a1 - a2 - 15);
+        let baseAngles;
+        if (isPro && a3Choices.length > 0) {
+          const a3 = a3Choices[Math.floor(Math.random() * a3Choices.length)];
+          const a4 = 180 - a1 - a2 - a3;
+          baseAngles = [a1, a2, a3, a4];
+        } else {
+          baseAngles = [a1, a2, 180 - a1 - a2];
+        }
+        const shuffledBase = [...baseAngles].sort(() => Math.random() - 0.5);
+        const allAngles = [...shuffledBase, ...shuffledBase];
+        const halfSize = allAngles.length / 2;
+        const displayLabels = Array(allAngles.length).fill(null);
+        const numHints = allAngles.length === 8 ? 2 : 1;
+        const chosenHints = [];
+        let availableForLabels = Array.from({ length: allAngles.length }, (_, i) => i);
+        for (let i = 0; i < numHints; i++) {
+          const randIdx = Math.floor(Math.random() * availableForLabels.length);
+          const selIdx = availableForLabels[randIdx];
+          chosenHints.push(selIdx);
+          displayLabels[selIdx] = `${allAngles[selIdx]}\xB0`;
+          const mirIdx = (selIdx + halfSize) % allAngles.length;
+          availableForLabels = availableForLabels.filter((idx) => idx !== selIdx && idx !== mirIdx);
+        }
+        const xPool = availableForLabels.filter((idx) => allAngles[idx] === a1);
+        if (xPool.length === 0) {
+          generateLevel(selectedLevel, false);
+          return;
+        }
+        const xIdx = xPool[Math.floor(Math.random() * xPool.length)];
+        displayLabels[xIdx] = "x";
+        const mirroredXIdx = (xIdx + halfSize) % allAngles.length;
+        availableForLabels = availableForLabels.filter((idx) => idx !== xIdx && idx !== mirroredXIdx);
+        const kxPool = availableForLabels.filter((idx) => allAngles[idx] === a2);
+        if (kxPool.length === 0) {
+          generateLevel(selectedLevel, false);
+          return;
+        }
+        const kxIdx = kxPool[Math.floor(Math.random() * kxPool.length)];
+        displayLabels[kxIdx] = k === 1 ? "x" : `${k}x`;
+        const mirroredKxIdx = (kxIdx + halfSize) % allAngles.length;
+        availableForLabels = availableForLabels.filter((idx) => idx !== kxIdx && idx !== mirroredKxIdx);
+        const targetCandidates = [];
+        if (k > 1)
+          targetCandidates.push((kxIdx + halfSize) % allAngles.length);
+        chosenHints.forEach((idx) => targetCandidates.push((idx + halfSize) % allAngles.length));
+        const targetAngleIdx = targetCandidates.find((idx) => !displayLabels[idx]) || (targetCandidates.length > 0 ? targetCandidates[0] : (kxIdx + halfSize) % allAngles.length);
+        let yConfig = null;
+        if (isPro) {
+          const yCount = Math.random() > 0.5 ? 3 : 2;
+          const yStart = Math.floor(Math.random() * allAngles.length);
+          const yIndices = [];
+          let yVal = 0;
+          let cumulativeStartAngle = 0;
+          for (let i = 0; i < yStart; i++)
+            cumulativeStartAngle += allAngles[i];
+          for (let i = 0; i < yCount; i++) {
+            const idx = (yStart + i) % allAngles.length;
+            yIndices.push(idx);
+            yVal += allAngles[idx];
+          }
+          yConfig = { indices: yIndices, value: Math.round(yVal), startAngleOffset: cumulativeStartAngle, totalSpan: yVal };
+        }
+        setConfig({
+          type: isPro ? "pro_algebra" : "algebra",
+          allAngles,
+          displayLabels,
+          yConfig,
+          targetAngleIdx,
+          answerX: a1,
+          answerTargetAngle: allAngles[targetAngleIdx],
+          answerY: isPro ? yConfig == null ? void 0 : yConfig.value : null
+        });
+        success = true;
+      }
+    }, [level, config]);
+    (0, import_react3.useEffect)(() => {
+      generateLevel(level, false);
+    }, [level]);
+    const handleInputChange = (id, val) => {
+      if (gameState === "success" || !config)
+        return;
+      const cleanVal = val.replace(/[^0-9]/g, "");
+      const correct = id === "x" ? config.answerX : id === "y" ? config.answerY : id === "target" ? config.answerTargetAngle : config.answerValue;
+      if (cleanVal && parseInt(cleanVal) === correct)
+        sound.playFieldSuccess();
+      const newInputs = __spreadProps(__spreadValues({}, inputs), { [id]: cleanVal });
+      setInputs(newInputs);
+      let solved = false;
+      if (config.type === "pro_algebra") {
+        solved = parseInt(newInputs["x"]) === config.answerX && parseInt(newInputs["target"]) === config.answerTargetAngle && parseInt(newInputs["y"]) === config.answerY;
+      } else if (config.type === "algebra") {
+        solved = parseInt(newInputs["x"]) === config.answerX && parseInt(newInputs["target"]) === config.answerTargetAngle;
+      } else {
+        solved = parseInt(newInputs["ans"]) === config.answerValue;
+      }
+      if (solved) {
+        setGameState("success");
+        sound.playUnlock();
+      }
+    };
+    const getTourSteps = () => {
+      if (level === "classic") {
+        return [
+          { target: "main-wheel", title: "\u0421\u0445\u0435\u043C\u0430 \u043A\u0443\u0442\u0456\u0432", content: "\u0422\u0443\u0442 \u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0456 \u043A\u0443\u0442\u0438. \u041B\u0456\u0442\u0435\u0440\u0438 (A, B...) \u043F\u043E\u0437\u043D\u0430\u0447\u0430\u044E\u0442\u044C \u043A\u043E\u0436\u0435\u043D \u043E\u043A\u0440\u0435\u043C\u0438\u0439 \u043A\u0443\u0442." },
+          { target: "target-label", title: "\u0426\u0456\u043B\u044C\u043E\u0432\u0438\u0439 \u043A\u0443\u0442", content: '\u0417\u043D\u0430\u043A "?" \u0432\u043A\u0430\u0437\u0443\u0454 \u043D\u0430 \u043A\u0443\u0442, \u0433\u0440\u0430\u0434\u0443\u0441\u043D\u0443 \u043C\u0456\u0440\u0443 \u044F\u043A\u043E\u0433\u043E \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u0437\u043D\u0430\u0439\u0442\u0438.' },
+          { target: "input-main", title: "\u041F\u043E\u043B\u0435 \u0432\u0432\u043E\u0434\u0443", content: "\u041F\u0456\u0441\u043B\u044F \u043F\u0440\u043E\u0432\u0435\u0434\u0435\u043D\u043D\u044F \u043E\u0431\u0447\u0438\u0441\u043B\u0435\u043D\u044C \u0432\u0432\u0435\u0434\u0438 \u0441\u044E\u0434\u0438 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442." }
+        ];
+      }
+      if (level === "algebra") {
+        return [
+          { target: "main-wheel", title: "\u0410\u043B\u0433\u0435\u0431\u0440\u0430", content: "\u0422\u0443\u0442 \u043A\u0443\u0442\u0438 \u0437\u0430\u0434\u0430\u043D\u0456 \u0447\u0435\u0440\u0435\u0437 \u0437\u043C\u0456\u043D\u043D\u0456 (x, 2x). \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439 \u0432\u0456\u0434\u043E\u043C\u0456 \u0447\u0438\u0441\u043B\u0430 \u043F\u043E\u0440\u0443\u0447, \u0449\u043E\u0431 \u0437\u043D\u0430\u0439\u0442\u0438 x." },
+          { target: "input-x", title: "\u0417\u043D\u0430\u0439\u0442\u0438 X", content: "\u0421\u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u043E\u0431\u0447\u0438\u0441\u043B\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F x \u0456 \u0432\u0432\u0435\u0434\u0438 \u0439\u043E\u0433\u043E \u0441\u044E\u0434\u0438." },
+          { target: "input-target", title: "\u0424\u0456\u043D\u0430\u043B\u044C\u043D\u0438\u0439 \u043A\u0443\u0442", content: "\u0410 \u0441\u044E\u0434\u0438 \u0432\u0432\u0435\u0434\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u043E\u0433\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u043E\u0433\u043E \u043A\u0443\u0442\u0430." }
+        ];
+      }
+      return [
+        { target: "input-x", title: "\u041A\u0440\u043E\u043A 1: \u0411\u0430\u0437\u043E\u0432\u0438\u0439 X", content: "\u0414\u043B\u044F \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0437\u043D\u0430\u0439\u0434\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F \u043D\u0435\u0432\u0456\u0434\u043E\u043C\u043E\u0433\u043E x." },
+        { target: "input-target", title: "\u041A\u0440\u043E\u043A 2: \u0426\u0456\u043B\u044C\u043E\u0432\u0438\u0439 \u043A\u0443\u0442", content: "\u0422\u0435\u043F\u0435\u0440 \u043E\u0431\u0447\u0438\u0441\u043B\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u043E\u0433\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u043E\u0433\u043E \u043A\u0443\u0442\u0430." },
+        { target: "arc-y", title: "\u041A\u0440\u043E\u043A 3: \u0412\u0435\u043B\u0438\u043A\u0438\u0439 \u043A\u0443\u0442 Y", content: "\u0417\u043D\u0430\u0439\u0434\u0438 \u0437\u0430\u0433\u0430\u043B\u044C\u043D\u0443 \u0441\u0443\u043C\u0443 \u043A\u0443\u0442\u0456\u0432, \u0449\u043E \u043E\u0445\u043E\u043F\u043B\u0435\u043D\u0456 \u0431\u043B\u0430\u043A\u0438\u0442\u043D\u043E\u044E \u043B\u0456\u043D\u0456\u0454\u044E Y." },
+        { target: "input-y", title: "\u0424\u0456\u043D\u0430\u043B\u044C\u043D\u0438\u0439 \u0432\u0432\u0456\u0434", content: "\u0412\u0432\u0435\u0434\u0438 \u0441\u0443\u043C\u0443 \u0434\u043B\u044F Y \u0441\u044E\u0434\u0438." }
+      ];
+    };
+    const polarToCartesian = (radius, angleInDegrees) => {
+      const rad = angleInDegrees * Math.PI / 180;
+      return { x: radius * Math.cos(rad), y: radius * Math.sin(rad) };
+    };
+    const describeStaticArc = (span, radius) => {
+      const start = polarToCartesian(radius, span);
+      const end = polarToCartesian(radius, 0);
+      return ["M", end.x, end.y, "A", radius, radius, 0, span <= 180 ? "0" : "1", 1, start.x, start.y].join(" ");
+    };
+    const getSVGCoords = (index, dist) => {
+      if (!config)
+        return { x: 0, y: 0 };
+      let currentAngle = rotation;
+      for (let i = 0; i < index; i++)
+        currentAngle += config.allAngles[i];
+      const midAngle = currentAngle + config.allAngles[index] / 2;
+      return polarToCartesian(dist, midAngle);
+    };
+    const getYCoords = (dist) => {
+      if (!(config == null ? void 0 : config.yConfig))
+        return { x: 0, y: 0 };
+      const midAngle = rotation + config.yConfig.startAngleOffset + config.yConfig.totalSpan / 2;
+      return polarToCartesian(dist, midAngle);
+    };
+    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "min-h-screen bg-[#020408] text-slate-200 font-sans p-4 lg:p-8 flex flex-col items-center overflow-x-hidden relative" }, /* @__PURE__ */ import_react3.default.createElement("style", null, `
+        @keyframes flowText {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+        .success-banner {
+          animation: flowText 15s linear infinite;
+        }
+        .svg-transition {
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        path.svg-transition {
+          transition: d 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      `), showTour && /* @__PURE__ */ import_react3.default.createElement(GuidedTour, { steps: getTourSteps(), onFinish: () => setShowTour(false) }), gameState === "success" && /* @__PURE__ */ import_react3.default.createElement("div", { className: "fixed inset-0 z-0 flex flex-col justify-center pointer-events-none opacity-20 select-none overflow-hidden" }, [...Array(6)].map((_, i) => /* @__PURE__ */ import_react3.default.createElement("div", { key: i, className: "success-banner text-[120px] font-black whitespace-nowrap leading-none py-4 text-amber-500 tracking-tighter", style: { animationDirection: i % 2 === 0 ? "normal" : "reverse", animationDuration: `${10 + i * 3}s` } }, "\u2022 MISSION ACCOMPLISHED \u2022 MISSION ACCOMPLISHED \u2022 MISSION ACCOMPLISHED \u2022 MISSION ACCOMPLISHED"))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "fixed right-8 top-8 z-[100] flex flex-col items-end" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "bg-black/40 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-2xl transition-all hover:border-white/30" }, /* @__PURE__ */ import_react3.default.createElement(Timer, { className: "text-amber-500 animate-pulse", size: 18 }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-2xl font-black text-white tabular-nums tracking-tighter" }, formatTime(seconds))), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-[8px] font-black text-white/30 uppercase tracking-[0.3em] mt-2 mr-2" }, "\u0422\u0440\u0438\u0432\u0430\u043B\u0456\u0441\u0442\u044C \u0441\u0435\u0441\u0456\u0457")), /* @__PURE__ */ import_react3.default.createElement("div", { className: "fixed right-8 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 z-[100] min-w-[80px]" }, /* @__PURE__ */ import_react3.default.createElement(ModeStat, { icon: Radio, value: missionStats.classic }), /* @__PURE__ */ import_react3.default.createElement(ModeStat, { icon: Cpu, value: missionStats.algebra }), /* @__PURE__ */ import_react3.default.createElement(ModeStat, { icon: Activity, value: missionStats.pro })), /* @__PURE__ */ import_react3.default.createElement("div", { className: "xl:hidden flex gap-6 mb-6 z-20 bg-black/40 p-4 rounded-3xl border border-white/10 backdrop-blur-md" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react3.default.createElement(Radio, { size: 14, className: "text-slate-500" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-lg font-medium text-slate-500" }, missionStats.classic)), /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react3.default.createElement(Cpu, { size: 14, className: "text-slate-500" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-lg font-medium text-slate-500" }, missionStats.algebra)), /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react3.default.createElement(Activity, { size: 14, className: "text-slate-500" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-lg font-medium text-slate-500" }, missionStats.pro))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex items-center gap-2 mb-4 z-20" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex bg-slate-900/40 p-1 rounded-2xl border border-white/5 backdrop-blur-xl shadow-2xl" }, [
+      { id: "classic", label: "\u0411\u0430\u0437\u043E\u0432\u0438\u0439", icon: Radio },
+      { id: "algebra", label: "\u041B\u043E\u0433\u0456\u043A\u0430", icon: Cpu },
+      { id: "pro", label: "\u0415\u043B\u0456\u0442\u0430", icon: Activity }
+    ].map((t) => /* @__PURE__ */ import_react3.default.createElement("button", { key: t.id, onClick: () => {
+      setLevel(t.id);
+      sound.playLevelShift();
+    }, className: `flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 ${level === t.id ? "text-amber-400 bg-white/10 shadow-lg shadow-black" : "text-slate-500 hover:text-slate-300"}` }, /* @__PURE__ */ import_react3.default.createElement(t.icon, { size: 14 }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-[11px] uppercase tracking-widest font-black" }, t.label)))), /* @__PURE__ */ import_react3.default.createElement("button", { onClick: () => {
+      setShowTour(true);
+      sound.playClick();
+    }, className: "w-11 h-11 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-amber-500 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all active:scale-95" }, /* @__PURE__ */ import_react3.default.createElement(CircleHelp, { size: 20 }))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex flex-col items-center w-full max-w-4xl relative z-10" }, /* @__PURE__ */ import_react3.default.createElement("div", { "data-tour": "main-wheel", className: "relative w-full max-w-[500px] aspect-square mb-2 flex items-center justify-center transition-transform duration-500" }, /* @__PURE__ */ import_react3.default.createElement("svg", { viewBox: "-360 -360 720 720", className: "w-full h-full drop-shadow-2xl overflow-visible" }, /* @__PURE__ */ import_react3.default.createElement("defs", null, /* @__PURE__ */ import_react3.default.createElement("radialGradient", { id: "fieldGradient", cx: "0", cy: "0", r: "240", gradientUnits: "userSpaceOnUse" }, /* @__PURE__ */ import_react3.default.createElement("stop", { offset: "0%", stopColor: "currentColor", stopOpacity: "0.8" }), /* @__PURE__ */ import_react3.default.createElement("stop", { offset: "100%", stopColor: "currentColor", stopOpacity: "0" })), /* @__PURE__ */ import_react3.default.createElement("mask", { id: "fieldMask" }, /* @__PURE__ */ import_react3.default.createElement("circle", { cx: "0", cy: "0", r: "260", fill: "url(#fieldGradient)" })), /* @__PURE__ */ import_react3.default.createElement("linearGradient", { id: "rayGradient", x1: "0", y1: "0", x2: RAY_LENGTH, y2: "0", gradientUnits: "userSpaceOnUse" }, /* @__PURE__ */ import_react3.default.createElement("stop", { offset: "70%", stopColor: "white", stopOpacity: "0.4" }), /* @__PURE__ */ import_react3.default.createElement("stop", { offset: "95%", stopColor: "#a1a1a1", stopOpacity: "0.9" }))), /* @__PURE__ */ import_react3.default.createElement("circle", { cx: "0", cy: "0", r: "250", fill: gameState === "success" ? themeColors.unlocked : themeColors.locked, mask: "url(#fieldMask)", className: "transition-colors duration-1000" }), config == null ? void 0 : config.allAngles.map((ang, i) => {
+      let startAngle = rotation;
+      for (let j = 0; j < i; j++)
+        startAngle += config.allAngles[j];
+      return /* @__PURE__ */ import_react3.default.createElement("g", { key: `ray-group-${i}`, className: "svg-transition", transform: `rotate(${startAngle})` }, /* @__PURE__ */ import_react3.default.createElement("line", { x1: "0", y1: "0", x2: RAY_LENGTH, y2: "0", stroke: "url(#rayGradient)", strokeWidth: COMMON_STROKE_WIDTH }), /* @__PURE__ */ import_react3.default.createElement("circle", { cx: RAY_LENGTH, cy: "0", r: "4", fill: "#a1a1a1" }));
+    }), (config == null ? void 0 : config.yConfig) && /* @__PURE__ */ import_react3.default.createElement("g", { "data-tour": "arc-y", className: "svg-transition", transform: `rotate(${rotation + config.yConfig.startAngleOffset})` }, /* @__PURE__ */ import_react3.default.createElement("path", { d: describeStaticArc(config.yConfig.totalSpan, RADIUS_ARC_Y), fill: "none", stroke: "#38bdf8", strokeWidth: COMMON_STROKE_WIDTH, strokeLinecap: "round" }), /* @__PURE__ */ import_react3.default.createElement("circle", { cx: polarToCartesian(RADIUS_ARC_Y, 0).x, cy: polarToCartesian(RADIUS_ARC_Y, 0).y, r: "4", fill: "#38bdf8" }), /* @__PURE__ */ import_react3.default.createElement("circle", { cx: polarToCartesian(RADIUS_ARC_Y, config.yConfig.totalSpan).x, cy: polarToCartesian(RADIUS_ARC_Y, config.yConfig.totalSpan).y, r: "4", fill: "#38bdf8" })), config == null ? void 0 : config.allAngles.map((ang, i) => {
+      const { x, y } = getSVGCoords(i, RADIUS_LETTERS);
+      return /* @__PURE__ */ import_react3.default.createElement("text", { key: `alpha-${i}`, textAnchor: "middle", dominantBaseline: "middle", className: "fill-white/30 font-mono font-black text-2xl pointer-events-none svg-transition", style: { transform: `translate(${x}px, ${y}px)` } }, alphabet[i]);
+    }), config == null ? void 0 : config.allAngles.map((ang, i) => {
+      const label = config.displayLabels[i];
+      if (!label)
+        return null;
+      const { x, y } = getSVGCoords(i, RADIUS_VALUES);
+      return /* @__PURE__ */ import_react3.default.createElement("g", { key: `lbl-svg-${i}`, className: "svg-transition", style: { transform: `translate(${x}px, ${y}px)` }, "data-tour": label === "?" ? "target-label" : void 0 }, /* @__PURE__ */ import_react3.default.createElement("rect", { x: "-22", y: "-12", width: "44", height: "24", rx: "4", className: "fill-black/60 stroke-white/10" }), /* @__PURE__ */ import_react3.default.createElement("text", { x: "0", y: "0", textAnchor: "middle", dominantBaseline: "middle", className: "font-black text-[16px] pointer-events-none fill-white" }, label));
+    }), (config == null ? void 0 : config.yConfig) && /* @__PURE__ */ import_react3.default.createElement("g", { className: "svg-transition", style: { transform: `translate(${getYCoords(RADIUS_LABEL_Y).x}px, ${getYCoords(RADIUS_LABEL_Y).y}px)` } }, /* @__PURE__ */ import_react3.default.createElement("circle", { cx: "0", cy: "0", r: "18", className: "fill-black stroke-sky-500 stroke-[2] shadow-lg" }), /* @__PURE__ */ import_react3.default.createElement("text", { x: "0", y: "0", textAnchor: "middle", dominantBaseline: "central", className: "fill-sky-500 font-black text-[18px] pointer-events-none" }, "Y"))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "absolute flex items-center justify-center z-40" }, gameState === "success" && /* @__PURE__ */ import_react3.default.createElement("div", { className: "absolute w-[100px] h-[100px] rounded-full bg-amber-500/40 animate-ping" }), /* @__PURE__ */ import_react3.default.createElement("div", { className: `w-[60px] h-[60px] rounded-full border flex items-center justify-center backdrop-blur-md transition-all duration-700 ${gameState === "success" ? "border-amber-500 bg-amber-400 shadow-[0_0_40px_rgba(245,158,11,0.6)] scale-110" : "border-white/10 bg-slate-900/80"} ` }, gameState === "success" ? /* @__PURE__ */ import_react3.default.createElement(LockOpen, { className: "text-black animate-pulse", size: 26, strokeWidth: 3 }) : /* @__PURE__ */ import_react3.default.createElement(Lock, { className: "text-white/40", size: 20 })))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "w-full max-w-xl px-4 z-50" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "bg-[#0a0c10] border border-white/10 p-6 rounded-[2rem] shadow-2xl" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex flex-col gap-4" }, ((config == null ? void 0 : config.type) === "algebra" || (config == null ? void 0 : config.type) === "pro_algebra") && /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex flex-col md:flex-row gap-4" }, /* @__PURE__ */ import_react3.default.createElement(InputField, { tourId: "input-x", id: "x", stepLabel: "\u041A\u0440\u043E\u043A 1", label: "\u0412\u0432\u0435\u0434\u0456\u0442\u044C X", icon: Activity, colorClass: "text-amber-400", placeholder: "--", value: inputs["x"], onChange: handleInputChange, disabled: gameState === "success", correctValue: config.answerX }), /* @__PURE__ */ import_react3.default.createElement(InputField, { tourId: "input-target", id: "target", stepLabel: "\u041A\u0440\u043E\u043A 2", label: `\u041A\u0443\u0442 ${alphabet[config.targetAngleIdx]}`, icon: Cpu, colorClass: "text-amber-400", placeholder: "---", value: inputs["target"], onChange: handleInputChange, disabled: gameState === "success", correctValue: config.answerTargetAngle })), (config == null ? void 0 : config.type) === "pro_algebra" && /* @__PURE__ */ import_react3.default.createElement(InputField, { tourId: "input-y", id: "y", stepLabel: "\u041A\u0440\u043E\u043A 3", label: "\u0421\u0443\u043C\u0430 Y", icon: Activity, colorClass: "text-sky-400", placeholder: "---", value: inputs["y"], onChange: handleInputChange, disabled: gameState === "success", correctValue: config.answerY }), (config == null ? void 0 : config.type) === "classic" && /* @__PURE__ */ import_react3.default.createElement(InputField, { tourId: "input-main", id: "ans", stepLabel: "\u0417\u043B\u0430\u043C", label: `\u041A\u0443\u0442 ${alphabet[config.targetAngleIdx]}`, icon: Radio, colorClass: "text-amber-400", placeholder: "---", value: inputs["ans"], onChange: handleInputChange, disabled: gameState === "success", correctValue: config.answerValue }), gameState === "success" && /* @__PURE__ */ import_react3.default.createElement("button", { onClick: () => generateLevel(level, true), className: "w-full py-4 bg-amber-500 text-black font-black uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 animate-bounce shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-transform active:scale-95" }, "\u041D\u0430\u0441\u0442\u0443\u043F\u043D\u0430 \u0446\u0456\u043B\u044C ", /* @__PURE__ */ import_react3.default.createElement(ArrowRight, { size: 18 })))))));
+  };
+  var stdin_default = App;
+  return __toCommonJS(stdin_exports);
+})();
+/*! Bundled license information:
+
+lucide-react/dist/esm/shared/src/utils.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/defaultAttributes.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/Icon.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/createLucideIcon.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/activity.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/arrow-right.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevron-right.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/circle-check.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/circle-help.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/cpu.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/lock-open.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/lock.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/radio.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/timer.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/x.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/lucide-react.js:
+  (**
+   * @license lucide-react v0.511.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+*/
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const root = ReactDOM.createRoot(document.getElementById('root'));
+
+                // Include the compiled error boundary code
+                var ErrorBoundaryModule = (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __propIsEnum = Object.prototype.propertyIsEnumerable;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+  var __spreadValues = (a, b) => {
+    for (var prop in b || (b = {}))
+      if (__hasOwnProp.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    if (__getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(b)) {
+        if (__propIsEnum.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      }
+    return a;
+  };
+  var __objRest = (source, exclude) => {
+    var target = {};
+    for (var prop in source)
+      if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+        target[prop] = source[prop];
+    if (source != null && __getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(source)) {
+        if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+          target[prop] = source[prop];
+      }
+    return target;
+  };
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+
+  // node_modules/react/cjs/react.development.js
+  var require_react_development = __commonJS({
+    "node_modules/react/cjs/react.development.js"(exports, module) {
+      "use strict";
+      (function() {
+        function defineDeprecationWarning(methodName, info) {
+          Object.defineProperty(Component.prototype, methodName, {
+            get: function() {
+              console.warn(
+                "%s(...) is deprecated in plain JavaScript React classes. %s",
+                info[0],
+                info[1]
+              );
+            }
+          });
+        }
+        function getIteratorFn(maybeIterable) {
+          if (null === maybeIterable || "object" !== typeof maybeIterable)
+            return null;
+          maybeIterable = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable["@@iterator"];
+          return "function" === typeof maybeIterable ? maybeIterable : null;
+        }
+        function warnNoop(publicInstance, callerName) {
+          publicInstance = (publicInstance = publicInstance.constructor) && (publicInstance.displayName || publicInstance.name) || "ReactClass";
+          var warningKey = publicInstance + "." + callerName;
+          didWarnStateUpdateForUnmountedComponent[warningKey] || (console.error(
+            "Can't call %s on a component that is not yet mounted. This is a no-op, but it might indicate a bug in your application. Instead, assign to `this.state` directly or define a `state = {};` class property with the desired state in the %s component.",
+            callerName,
+            publicInstance
+          ), didWarnStateUpdateForUnmountedComponent[warningKey] = true);
+        }
+        function Component(props, context, updater) {
+          this.props = props;
+          this.context = context;
+          this.refs = emptyObject;
+          this.updater = updater || ReactNoopUpdateQueue;
+        }
+        function ComponentDummy() {
+        }
+        function PureComponent(props, context, updater) {
+          this.props = props;
+          this.context = context;
+          this.refs = emptyObject;
+          this.updater = updater || ReactNoopUpdateQueue;
+        }
+        function testStringCoercion(value) {
+          return "" + value;
+        }
+        function checkKeyStringCoercion(value) {
+          try {
+            testStringCoercion(value);
+            var JSCompiler_inline_result = false;
+          } catch (e) {
+            JSCompiler_inline_result = true;
+          }
+          if (JSCompiler_inline_result) {
+            JSCompiler_inline_result = console;
+            var JSCompiler_temp_const = JSCompiler_inline_result.error;
+            var JSCompiler_inline_result$jscomp$0 = "function" === typeof Symbol && Symbol.toStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+            JSCompiler_temp_const.call(
+              JSCompiler_inline_result,
+              "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
+              JSCompiler_inline_result$jscomp$0
+            );
+            return testStringCoercion(value);
+          }
+        }
+        function getComponentNameFromType(type) {
+          if (null == type)
+            return null;
+          if ("function" === typeof type)
+            return type.$$typeof === REACT_CLIENT_REFERENCE ? null : type.displayName || type.name || null;
+          if ("string" === typeof type)
+            return type;
+          switch (type) {
+            case REACT_FRAGMENT_TYPE:
+              return "Fragment";
+            case REACT_PROFILER_TYPE:
+              return "Profiler";
+            case REACT_STRICT_MODE_TYPE:
+              return "StrictMode";
+            case REACT_SUSPENSE_TYPE:
+              return "Suspense";
+            case REACT_SUSPENSE_LIST_TYPE:
+              return "SuspenseList";
+            case REACT_ACTIVITY_TYPE:
+              return "Activity";
+          }
+          if ("object" === typeof type)
+            switch ("number" === typeof type.tag && console.error(
+              "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
+            ), type.$$typeof) {
+              case REACT_PORTAL_TYPE:
+                return "Portal";
+              case REACT_CONTEXT_TYPE:
+                return (type.displayName || "Context") + ".Provider";
+              case REACT_CONSUMER_TYPE:
+                return (type._context.displayName || "Context") + ".Consumer";
+              case REACT_FORWARD_REF_TYPE:
+                var innerType = type.render;
+                type = type.displayName;
+                type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+                return type;
+              case REACT_MEMO_TYPE:
+                return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
+              case REACT_LAZY_TYPE:
+                innerType = type._payload;
+                type = type._init;
+                try {
+                  return getComponentNameFromType(type(innerType));
+                } catch (x) {
+                }
+            }
+          return null;
+        }
+        function getTaskName(type) {
+          if (type === REACT_FRAGMENT_TYPE)
+            return "<>";
+          if ("object" === typeof type && null !== type && type.$$typeof === REACT_LAZY_TYPE)
+            return "<...>";
+          try {
+            var name = getComponentNameFromType(type);
+            return name ? "<" + name + ">" : "<...>";
+          } catch (x) {
+            return "<...>";
+          }
+        }
+        function getOwner() {
+          var dispatcher = ReactSharedInternals.A;
+          return null === dispatcher ? null : dispatcher.getOwner();
+        }
+        function UnknownOwner() {
+          return Error("react-stack-top-frame");
+        }
+        function hasValidKey(config) {
+          if (hasOwnProperty.call(config, "key")) {
+            var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+            if (getter && getter.isReactWarning)
+              return false;
+          }
+          return void 0 !== config.key;
+        }
+        function defineKeyPropWarningGetter(props, displayName) {
+          function warnAboutAccessingKey() {
+            specialPropKeyWarningShown || (specialPropKeyWarningShown = true, console.error(
+              "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
+              displayName
+            ));
+          }
+          warnAboutAccessingKey.isReactWarning = true;
+          Object.defineProperty(props, "key", {
+            get: warnAboutAccessingKey,
+            configurable: true
+          });
+        }
+        function elementRefGetterWithDeprecationWarning() {
+          var componentName = getComponentNameFromType(this.type);
+          didWarnAboutElementRef[componentName] || (didWarnAboutElementRef[componentName] = true, console.error(
+            "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
+          ));
+          componentName = this.props.ref;
+          return void 0 !== componentName ? componentName : null;
+        }
+        function ReactElement(type, key, self, source, owner, props, debugStack, debugTask) {
+          self = props.ref;
+          type = {
+            $$typeof: REACT_ELEMENT_TYPE,
+            type,
+            key,
+            props,
+            _owner: owner
+          };
+          null !== (void 0 !== self ? self : null) ? Object.defineProperty(type, "ref", {
+            enumerable: false,
+            get: elementRefGetterWithDeprecationWarning
+          }) : Object.defineProperty(type, "ref", { enumerable: false, value: null });
+          type._store = {};
+          Object.defineProperty(type._store, "validated", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: 0
+          });
+          Object.defineProperty(type, "_debugInfo", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: null
+          });
+          Object.defineProperty(type, "_debugStack", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: debugStack
+          });
+          Object.defineProperty(type, "_debugTask", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: debugTask
+          });
+          Object.freeze && (Object.freeze(type.props), Object.freeze(type));
+          return type;
+        }
+        function cloneAndReplaceKey(oldElement, newKey) {
+          newKey = ReactElement(
+            oldElement.type,
+            newKey,
+            void 0,
+            void 0,
+            oldElement._owner,
+            oldElement.props,
+            oldElement._debugStack,
+            oldElement._debugTask
+          );
+          oldElement._store && (newKey._store.validated = oldElement._store.validated);
+          return newKey;
+        }
+        function isValidElement(object) {
+          return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
+        }
+        function escape(key) {
+          var escaperLookup = { "=": "=0", ":": "=2" };
+          return "$" + key.replace(/[=:]/g, function(match) {
+            return escaperLookup[match];
+          });
+        }
+        function getElementKey(element, index) {
+          return "object" === typeof element && null !== element && null != element.key ? (checkKeyStringCoercion(element.key), escape("" + element.key)) : index.toString(36);
+        }
+        function noop$1() {
+        }
+        function resolveThenable(thenable) {
+          switch (thenable.status) {
+            case "fulfilled":
+              return thenable.value;
+            case "rejected":
+              throw thenable.reason;
+            default:
+              switch ("string" === typeof thenable.status ? thenable.then(noop$1, noop$1) : (thenable.status = "pending", thenable.then(
+                function(fulfilledValue) {
+                  "pending" === thenable.status && (thenable.status = "fulfilled", thenable.value = fulfilledValue);
+                },
+                function(error) {
+                  "pending" === thenable.status && (thenable.status = "rejected", thenable.reason = error);
+                }
+              )), thenable.status) {
+                case "fulfilled":
+                  return thenable.value;
+                case "rejected":
+                  throw thenable.reason;
+              }
+          }
+          throw thenable;
+        }
+        function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
+          var type = typeof children;
+          if ("undefined" === type || "boolean" === type)
+            children = null;
+          var invokeCallback = false;
+          if (null === children)
+            invokeCallback = true;
+          else
+            switch (type) {
+              case "bigint":
+              case "string":
+              case "number":
+                invokeCallback = true;
+                break;
+              case "object":
+                switch (children.$$typeof) {
+                  case REACT_ELEMENT_TYPE:
+                  case REACT_PORTAL_TYPE:
+                    invokeCallback = true;
+                    break;
+                  case REACT_LAZY_TYPE:
+                    return invokeCallback = children._init, mapIntoArray(
+                      invokeCallback(children._payload),
+                      array,
+                      escapedPrefix,
+                      nameSoFar,
+                      callback
+                    );
+                }
+            }
+          if (invokeCallback) {
+            invokeCallback = children;
+            callback = callback(invokeCallback);
+            var childKey = "" === nameSoFar ? "." + getElementKey(invokeCallback, 0) : nameSoFar;
+            isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array, escapedPrefix, "", function(c) {
+              return c;
+            })) : null != callback && (isValidElement(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
+              callback,
+              escapedPrefix + (null == callback.key || invokeCallback && invokeCallback.key === callback.key ? "" : ("" + callback.key).replace(
+                userProvidedKeyEscapeRegex,
+                "$&/"
+              ) + "/") + childKey
+            ), "" !== nameSoFar && null != invokeCallback && isValidElement(invokeCallback) && null == invokeCallback.key && invokeCallback._store && !invokeCallback._store.validated && (escapedPrefix._store.validated = 2), callback = escapedPrefix), array.push(callback));
+            return 1;
+          }
+          invokeCallback = 0;
+          childKey = "" === nameSoFar ? "." : nameSoFar + ":";
+          if (isArrayImpl(children))
+            for (var i = 0; i < children.length; i++)
+              nameSoFar = children[i], type = childKey + getElementKey(nameSoFar, i), invokeCallback += mapIntoArray(
+                nameSoFar,
+                array,
+                escapedPrefix,
+                type,
+                callback
+              );
+          else if (i = getIteratorFn(children), "function" === typeof i)
+            for (i === children.entries && (didWarnAboutMaps || console.warn(
+              "Using Maps as children is not supported. Use an array of keyed ReactElements instead."
+            ), didWarnAboutMaps = true), children = i.call(children), i = 0; !(nameSoFar = children.next()).done; )
+              nameSoFar = nameSoFar.value, type = childKey + getElementKey(nameSoFar, i++), invokeCallback += mapIntoArray(
+                nameSoFar,
+                array,
+                escapedPrefix,
+                type,
+                callback
+              );
+          else if ("object" === type) {
+            if ("function" === typeof children.then)
+              return mapIntoArray(
+                resolveThenable(children),
+                array,
+                escapedPrefix,
+                nameSoFar,
+                callback
+              );
+            array = String(children);
+            throw Error(
+              "Objects are not valid as a React child (found: " + ("[object Object]" === array ? "object with keys {" + Object.keys(children).join(", ") + "}" : array) + "). If you meant to render a collection of children, use an array instead."
+            );
+          }
+          return invokeCallback;
+        }
+        function mapChildren(children, func, context) {
+          if (null == children)
+            return children;
+          var result = [], count = 0;
+          mapIntoArray(children, result, "", "", function(child) {
+            return func.call(context, child, count++);
+          });
+          return result;
+        }
+        function lazyInitializer(payload) {
+          if (-1 === payload._status) {
+            var ctor = payload._result;
+            ctor = ctor();
+            ctor.then(
+              function(moduleObject) {
+                if (0 === payload._status || -1 === payload._status)
+                  payload._status = 1, payload._result = moduleObject;
+              },
+              function(error) {
+                if (0 === payload._status || -1 === payload._status)
+                  payload._status = 2, payload._result = error;
+              }
+            );
+            -1 === payload._status && (payload._status = 0, payload._result = ctor);
+          }
+          if (1 === payload._status)
+            return ctor = payload._result, void 0 === ctor && console.error(
+              "lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent = lazy(() => import('./MyComponent'))\n\nDid you accidentally put curly braces around the import?",
+              ctor
+            ), "default" in ctor || console.error(
+              "lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent = lazy(() => import('./MyComponent'))",
+              ctor
+            ), ctor.default;
+          throw payload._result;
+        }
+        function resolveDispatcher() {
+          var dispatcher = ReactSharedInternals.H;
+          null === dispatcher && console.error(
+            "Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem."
+          );
+          return dispatcher;
+        }
+        function noop() {
+        }
+        function enqueueTask(task) {
+          if (null === enqueueTaskImpl)
+            try {
+              var requireString = ("require" + Math.random()).slice(0, 7);
+              enqueueTaskImpl = (module && module[requireString]).call(
+                module,
+                "timers"
+              ).setImmediate;
+            } catch (_err) {
+              enqueueTaskImpl = function(callback) {
+                false === didWarnAboutMessageChannel && (didWarnAboutMessageChannel = true, "undefined" === typeof MessageChannel && console.error(
+                  "This browser does not have a MessageChannel implementation, so enqueuing tasks via await act(async () => ...) will fail. Please file an issue at https://github.com/facebook/react/issues if you encounter this warning."
+                ));
+                var channel = new MessageChannel();
+                channel.port1.onmessage = callback;
+                channel.port2.postMessage(void 0);
+              };
+            }
+          return enqueueTaskImpl(task);
+        }
+        function aggregateErrors(errors) {
+          return 1 < errors.length && "function" === typeof AggregateError ? new AggregateError(errors) : errors[0];
+        }
+        function popActScope(prevActQueue, prevActScopeDepth) {
+          prevActScopeDepth !== actScopeDepth - 1 && console.error(
+            "You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. "
+          );
+          actScopeDepth = prevActScopeDepth;
+        }
+        function recursivelyFlushAsyncActWork(returnValue, resolve, reject) {
+          var queue = ReactSharedInternals.actQueue;
+          if (null !== queue)
+            if (0 !== queue.length)
+              try {
+                flushActQueue(queue);
+                enqueueTask(function() {
+                  return recursivelyFlushAsyncActWork(returnValue, resolve, reject);
+                });
+                return;
+              } catch (error) {
+                ReactSharedInternals.thrownErrors.push(error);
+              }
+            else
+              ReactSharedInternals.actQueue = null;
+          0 < ReactSharedInternals.thrownErrors.length ? (queue = aggregateErrors(ReactSharedInternals.thrownErrors), ReactSharedInternals.thrownErrors.length = 0, reject(queue)) : resolve(returnValue);
+        }
+        function flushActQueue(queue) {
+          if (!isFlushing) {
+            isFlushing = true;
+            var i = 0;
+            try {
+              for (; i < queue.length; i++) {
+                var callback = queue[i];
+                do {
+                  ReactSharedInternals.didUsePromise = false;
+                  var continuation = callback(false);
+                  if (null !== continuation) {
+                    if (ReactSharedInternals.didUsePromise) {
+                      queue[i] = callback;
+                      queue.splice(0, i);
+                      return;
+                    }
+                    callback = continuation;
+                  } else
+                    break;
+                } while (1);
+              }
+              queue.length = 0;
+            } catch (error) {
+              queue.splice(0, i + 1), ReactSharedInternals.thrownErrors.push(error);
+            } finally {
+              isFlushing = false;
+            }
+          }
+        }
+        "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
+        var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+        Symbol.for("react.provider");
+        var REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, didWarnStateUpdateForUnmountedComponent = {}, ReactNoopUpdateQueue = {
+          isMounted: function() {
+            return false;
+          },
+          enqueueForceUpdate: function(publicInstance) {
+            warnNoop(publicInstance, "forceUpdate");
+          },
+          enqueueReplaceState: function(publicInstance) {
+            warnNoop(publicInstance, "replaceState");
+          },
+          enqueueSetState: function(publicInstance) {
+            warnNoop(publicInstance, "setState");
+          }
+        }, assign = Object.assign, emptyObject = {};
+        Object.freeze(emptyObject);
+        Component.prototype.isReactComponent = {};
+        Component.prototype.setState = function(partialState, callback) {
+          if ("object" !== typeof partialState && "function" !== typeof partialState && null != partialState)
+            throw Error(
+              "takes an object of state variables to update or a function which returns an object of state variables."
+            );
+          this.updater.enqueueSetState(this, partialState, callback, "setState");
+        };
+        Component.prototype.forceUpdate = function(callback) {
+          this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
+        };
+        var deprecatedAPIs = {
+          isMounted: [
+            "isMounted",
+            "Instead, make sure to clean up subscriptions and pending requests in componentWillUnmount to prevent memory leaks."
+          ],
+          replaceState: [
+            "replaceState",
+            "Refactor your code to use setState instead (see https://github.com/facebook/react/issues/3236)."
+          ]
+        }, fnName;
+        for (fnName in deprecatedAPIs)
+          deprecatedAPIs.hasOwnProperty(fnName) && defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+        ComponentDummy.prototype = Component.prototype;
+        deprecatedAPIs = PureComponent.prototype = new ComponentDummy();
+        deprecatedAPIs.constructor = PureComponent;
+        assign(deprecatedAPIs, Component.prototype);
+        deprecatedAPIs.isPureReactComponent = true;
+        var isArrayImpl = Array.isArray, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = {
+          H: null,
+          A: null,
+          T: null,
+          S: null,
+          V: null,
+          actQueue: null,
+          isBatchingLegacy: false,
+          didScheduleLegacyUpdate: false,
+          didUsePromise: false,
+          thrownErrors: [],
+          getCurrentStack: null,
+          recentlyCreatedOwnerStacks: 0
+        }, hasOwnProperty = Object.prototype.hasOwnProperty, createTask = console.createTask ? console.createTask : function() {
+          return null;
+        };
+        deprecatedAPIs = {
+          "react-stack-bottom-frame": function(callStackForError) {
+            return callStackForError();
+          }
+        };
+        var specialPropKeyWarningShown, didWarnAboutOldJSXRuntime;
+        var didWarnAboutElementRef = {};
+        var unknownOwnerDebugStack = deprecatedAPIs["react-stack-bottom-frame"].bind(deprecatedAPIs, UnknownOwner)();
+        var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
+        var didWarnAboutMaps = false, userProvidedKeyEscapeRegex = /\/+/g, reportGlobalError = "function" === typeof reportError ? reportError : function(error) {
+          if ("object" === typeof window && "function" === typeof window.ErrorEvent) {
+            var event = new window.ErrorEvent("error", {
+              bubbles: true,
+              cancelable: true,
+              message: "object" === typeof error && null !== error && "string" === typeof error.message ? String(error.message) : String(error),
+              error
+            });
+            if (!window.dispatchEvent(event))
+              return;
+          } else if ("object" === typeof process && "function" === typeof process.emit) {
+            process.emit("uncaughtException", error);
+            return;
+          }
+          console.error(error);
+        }, didWarnAboutMessageChannel = false, enqueueTaskImpl = null, actScopeDepth = 0, didWarnNoAwaitAct = false, isFlushing = false, queueSeveralMicrotasks = "function" === typeof queueMicrotask ? function(callback) {
+          queueMicrotask(function() {
+            return queueMicrotask(callback);
+          });
+        } : enqueueTask;
+        deprecatedAPIs = Object.freeze({
+          __proto__: null,
+          c: function(size) {
+            return resolveDispatcher().useMemoCache(size);
+          }
+        });
+        exports.Children = {
+          map: mapChildren,
+          forEach: function(children, forEachFunc, forEachContext) {
+            mapChildren(
+              children,
+              function() {
+                forEachFunc.apply(this, arguments);
+              },
+              forEachContext
+            );
+          },
+          count: function(children) {
+            var n = 0;
+            mapChildren(children, function() {
+              n++;
+            });
+            return n;
+          },
+          toArray: function(children) {
+            return mapChildren(children, function(child) {
+              return child;
+            }) || [];
+          },
+          only: function(children) {
+            if (!isValidElement(children))
+              throw Error(
+                "React.Children.only expected to receive a single React element child."
+              );
+            return children;
+          }
+        };
+        exports.Component = Component;
+        exports.Fragment = REACT_FRAGMENT_TYPE;
+        exports.Profiler = REACT_PROFILER_TYPE;
+        exports.PureComponent = PureComponent;
+        exports.StrictMode = REACT_STRICT_MODE_TYPE;
+        exports.Suspense = REACT_SUSPENSE_TYPE;
+        exports.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = ReactSharedInternals;
+        exports.__COMPILER_RUNTIME = deprecatedAPIs;
+        exports.act = function(callback) {
+          var prevActQueue = ReactSharedInternals.actQueue, prevActScopeDepth = actScopeDepth;
+          actScopeDepth++;
+          var queue = ReactSharedInternals.actQueue = null !== prevActQueue ? prevActQueue : [], didAwaitActCall = false;
+          try {
+            var result = callback();
+          } catch (error) {
+            ReactSharedInternals.thrownErrors.push(error);
+          }
+          if (0 < ReactSharedInternals.thrownErrors.length)
+            throw popActScope(prevActQueue, prevActScopeDepth), callback = aggregateErrors(ReactSharedInternals.thrownErrors), ReactSharedInternals.thrownErrors.length = 0, callback;
+          if (null !== result && "object" === typeof result && "function" === typeof result.then) {
+            var thenable = result;
+            queueSeveralMicrotasks(function() {
+              didAwaitActCall || didWarnNoAwaitAct || (didWarnNoAwaitAct = true, console.error(
+                "You called act(async () => ...) without await. This could lead to unexpected testing behaviour, interleaving multiple act calls and mixing their scopes. You should - await act(async () => ...);"
+              ));
+            });
+            return {
+              then: function(resolve, reject) {
+                didAwaitActCall = true;
+                thenable.then(
+                  function(returnValue) {
+                    popActScope(prevActQueue, prevActScopeDepth);
+                    if (0 === prevActScopeDepth) {
+                      try {
+                        flushActQueue(queue), enqueueTask(function() {
+                          return recursivelyFlushAsyncActWork(
+                            returnValue,
+                            resolve,
+                            reject
+                          );
+                        });
+                      } catch (error$0) {
+                        ReactSharedInternals.thrownErrors.push(error$0);
+                      }
+                      if (0 < ReactSharedInternals.thrownErrors.length) {
+                        var _thrownError = aggregateErrors(
+                          ReactSharedInternals.thrownErrors
+                        );
+                        ReactSharedInternals.thrownErrors.length = 0;
+                        reject(_thrownError);
+                      }
+                    } else
+                      resolve(returnValue);
+                  },
+                  function(error) {
+                    popActScope(prevActQueue, prevActScopeDepth);
+                    0 < ReactSharedInternals.thrownErrors.length ? (error = aggregateErrors(
+                      ReactSharedInternals.thrownErrors
+                    ), ReactSharedInternals.thrownErrors.length = 0, reject(error)) : reject(error);
+                  }
+                );
+              }
+            };
+          }
+          var returnValue$jscomp$0 = result;
+          popActScope(prevActQueue, prevActScopeDepth);
+          0 === prevActScopeDepth && (flushActQueue(queue), 0 !== queue.length && queueSeveralMicrotasks(function() {
+            didAwaitActCall || didWarnNoAwaitAct || (didWarnNoAwaitAct = true, console.error(
+              "A component suspended inside an `act` scope, but the `act` call was not awaited. When testing React components that depend on asynchronous data, you must await the result:\n\nawait act(() => ...)"
+            ));
+          }), ReactSharedInternals.actQueue = null);
+          if (0 < ReactSharedInternals.thrownErrors.length)
+            throw callback = aggregateErrors(ReactSharedInternals.thrownErrors), ReactSharedInternals.thrownErrors.length = 0, callback;
+          return {
+            then: function(resolve, reject) {
+              didAwaitActCall = true;
+              0 === prevActScopeDepth ? (ReactSharedInternals.actQueue = queue, enqueueTask(function() {
+                return recursivelyFlushAsyncActWork(
+                  returnValue$jscomp$0,
+                  resolve,
+                  reject
+                );
+              })) : resolve(returnValue$jscomp$0);
+            }
+          };
+        };
+        exports.cache = function(fn) {
+          return function() {
+            return fn.apply(null, arguments);
+          };
+        };
+        exports.captureOwnerStack = function() {
+          var getCurrentStack = ReactSharedInternals.getCurrentStack;
+          return null === getCurrentStack ? null : getCurrentStack();
+        };
+        exports.cloneElement = function(element, config, children) {
+          if (null === element || void 0 === element)
+            throw Error(
+              "The argument must be a React element, but you passed " + element + "."
+            );
+          var props = assign({}, element.props), key = element.key, owner = element._owner;
+          if (null != config) {
+            var JSCompiler_inline_result;
+            a: {
+              if (hasOwnProperty.call(config, "ref") && (JSCompiler_inline_result = Object.getOwnPropertyDescriptor(
+                config,
+                "ref"
+              ).get) && JSCompiler_inline_result.isReactWarning) {
+                JSCompiler_inline_result = false;
+                break a;
+              }
+              JSCompiler_inline_result = void 0 !== config.ref;
+            }
+            JSCompiler_inline_result && (owner = getOwner());
+            hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key);
+            for (propName in config)
+              !hasOwnProperty.call(config, propName) || "key" === propName || "__self" === propName || "__source" === propName || "ref" === propName && void 0 === config.ref || (props[propName] = config[propName]);
+          }
+          var propName = arguments.length - 2;
+          if (1 === propName)
+            props.children = children;
+          else if (1 < propName) {
+            JSCompiler_inline_result = Array(propName);
+            for (var i = 0; i < propName; i++)
+              JSCompiler_inline_result[i] = arguments[i + 2];
+            props.children = JSCompiler_inline_result;
+          }
+          props = ReactElement(
+            element.type,
+            key,
+            void 0,
+            void 0,
+            owner,
+            props,
+            element._debugStack,
+            element._debugTask
+          );
+          for (key = 2; key < arguments.length; key++)
+            owner = arguments[key], isValidElement(owner) && owner._store && (owner._store.validated = 1);
+          return props;
+        };
+        exports.createContext = function(defaultValue) {
+          defaultValue = {
+            $$typeof: REACT_CONTEXT_TYPE,
+            _currentValue: defaultValue,
+            _currentValue2: defaultValue,
+            _threadCount: 0,
+            Provider: null,
+            Consumer: null
+          };
+          defaultValue.Provider = defaultValue;
+          defaultValue.Consumer = {
+            $$typeof: REACT_CONSUMER_TYPE,
+            _context: defaultValue
+          };
+          defaultValue._currentRenderer = null;
+          defaultValue._currentRenderer2 = null;
+          return defaultValue;
+        };
+        exports.createElement = function(type, config, children) {
+          for (var i = 2; i < arguments.length; i++) {
+            var node = arguments[i];
+            isValidElement(node) && node._store && (node._store.validated = 1);
+          }
+          i = {};
+          node = null;
+          if (null != config)
+            for (propName in didWarnAboutOldJSXRuntime || !("__self" in config) || "key" in config || (didWarnAboutOldJSXRuntime = true, console.warn(
+              "Your app (or one of its dependencies) is using an outdated JSX transform. Update to the modern JSX transform for faster performance: https://react.dev/link/new-jsx-transform"
+            )), hasValidKey(config) && (checkKeyStringCoercion(config.key), node = "" + config.key), config)
+              hasOwnProperty.call(config, propName) && "key" !== propName && "__self" !== propName && "__source" !== propName && (i[propName] = config[propName]);
+          var childrenLength = arguments.length - 2;
+          if (1 === childrenLength)
+            i.children = children;
+          else if (1 < childrenLength) {
+            for (var childArray = Array(childrenLength), _i = 0; _i < childrenLength; _i++)
+              childArray[_i] = arguments[_i + 2];
+            Object.freeze && Object.freeze(childArray);
+            i.children = childArray;
+          }
+          if (type && type.defaultProps)
+            for (propName in childrenLength = type.defaultProps, childrenLength)
+              void 0 === i[propName] && (i[propName] = childrenLength[propName]);
+          node && defineKeyPropWarningGetter(
+            i,
+            "function" === typeof type ? type.displayName || type.name || "Unknown" : type
+          );
+          var propName = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
+          return ReactElement(
+            type,
+            node,
+            void 0,
+            void 0,
+            getOwner(),
+            i,
+            propName ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
+            propName ? createTask(getTaskName(type)) : unknownOwnerDebugTask
+          );
+        };
+        exports.createRef = function() {
+          var refObject = { current: null };
+          Object.seal(refObject);
+          return refObject;
+        };
+        exports.forwardRef = function(render) {
+          null != render && render.$$typeof === REACT_MEMO_TYPE ? console.error(
+            "forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...))."
+          ) : "function" !== typeof render ? console.error(
+            "forwardRef requires a render function but was given %s.",
+            null === render ? "null" : typeof render
+          ) : 0 !== render.length && 2 !== render.length && console.error(
+            "forwardRef render functions accept exactly two parameters: props and ref. %s",
+            1 === render.length ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined."
+          );
+          null != render && null != render.defaultProps && console.error(
+            "forwardRef render functions do not support defaultProps. Did you accidentally pass a React component?"
+          );
+          var elementType = { $$typeof: REACT_FORWARD_REF_TYPE, render }, ownName;
+          Object.defineProperty(elementType, "displayName", {
+            enumerable: false,
+            configurable: true,
+            get: function() {
+              return ownName;
+            },
+            set: function(name) {
+              ownName = name;
+              render.name || render.displayName || (Object.defineProperty(render, "name", { value: name }), render.displayName = name);
+            }
+          });
+          return elementType;
+        };
+        exports.isValidElement = isValidElement;
+        exports.lazy = function(ctor) {
+          return {
+            $$typeof: REACT_LAZY_TYPE,
+            _payload: { _status: -1, _result: ctor },
+            _init: lazyInitializer
+          };
+        };
+        exports.memo = function(type, compare) {
+          null == type && console.error(
+            "memo: The first argument must be a component. Instead received: %s",
+            null === type ? "null" : typeof type
+          );
+          compare = {
+            $$typeof: REACT_MEMO_TYPE,
+            type,
+            compare: void 0 === compare ? null : compare
+          };
+          var ownName;
+          Object.defineProperty(compare, "displayName", {
+            enumerable: false,
+            configurable: true,
+            get: function() {
+              return ownName;
+            },
+            set: function(name) {
+              ownName = name;
+              type.name || type.displayName || (Object.defineProperty(type, "name", { value: name }), type.displayName = name);
+            }
+          });
+          return compare;
+        };
+        exports.startTransition = function(scope) {
+          var prevTransition = ReactSharedInternals.T, currentTransition = {};
+          ReactSharedInternals.T = currentTransition;
+          currentTransition._updatedFibers = /* @__PURE__ */ new Set();
+          try {
+            var returnValue = scope(), onStartTransitionFinish = ReactSharedInternals.S;
+            null !== onStartTransitionFinish && onStartTransitionFinish(currentTransition, returnValue);
+            "object" === typeof returnValue && null !== returnValue && "function" === typeof returnValue.then && returnValue.then(noop, reportGlobalError);
+          } catch (error) {
+            reportGlobalError(error);
+          } finally {
+            null === prevTransition && currentTransition._updatedFibers && (scope = currentTransition._updatedFibers.size, currentTransition._updatedFibers.clear(), 10 < scope && console.warn(
+              "Detected a large number of updates inside startTransition. If this is due to a subscription please re-write it to use React provided hooks. Otherwise concurrent mode guarantees are off the table."
+            )), ReactSharedInternals.T = prevTransition;
+          }
+        };
+        exports.unstable_useCacheRefresh = function() {
+          return resolveDispatcher().useCacheRefresh();
+        };
+        exports.use = function(usable) {
+          return resolveDispatcher().use(usable);
+        };
+        exports.useActionState = function(action, initialState, permalink) {
+          return resolveDispatcher().useActionState(
+            action,
+            initialState,
+            permalink
+          );
+        };
+        exports.useCallback = function(callback, deps) {
+          return resolveDispatcher().useCallback(callback, deps);
+        };
+        exports.useContext = function(Context) {
+          var dispatcher = resolveDispatcher();
+          Context.$$typeof === REACT_CONSUMER_TYPE && console.error(
+            "Calling useContext(Context.Consumer) is not supported and will cause bugs. Did you mean to call useContext(Context) instead?"
+          );
+          return dispatcher.useContext(Context);
+        };
+        exports.useDebugValue = function(value, formatterFn) {
+          return resolveDispatcher().useDebugValue(value, formatterFn);
+        };
+        exports.useDeferredValue = function(value, initialValue) {
+          return resolveDispatcher().useDeferredValue(value, initialValue);
+        };
+        exports.useEffect = function(create, createDeps, update) {
+          null == create && console.warn(
+            "React Hook useEffect requires an effect callback. Did you forget to pass a callback to the hook?"
+          );
+          var dispatcher = resolveDispatcher();
+          if ("function" === typeof update)
+            throw Error(
+              "useEffect CRUD overload is not enabled in this build of React."
+            );
+          return dispatcher.useEffect(create, createDeps);
+        };
+        exports.useId = function() {
+          return resolveDispatcher().useId();
+        };
+        exports.useImperativeHandle = function(ref, create, deps) {
+          return resolveDispatcher().useImperativeHandle(ref, create, deps);
+        };
+        exports.useInsertionEffect = function(create, deps) {
+          null == create && console.warn(
+            "React Hook useInsertionEffect requires an effect callback. Did you forget to pass a callback to the hook?"
+          );
+          return resolveDispatcher().useInsertionEffect(create, deps);
+        };
+        exports.useLayoutEffect = function(create, deps) {
+          null == create && console.warn(
+            "React Hook useLayoutEffect requires an effect callback. Did you forget to pass a callback to the hook?"
+          );
+          return resolveDispatcher().useLayoutEffect(create, deps);
+        };
+        exports.useMemo = function(create, deps) {
+          return resolveDispatcher().useMemo(create, deps);
+        };
+        exports.useOptimistic = function(passthrough, reducer) {
+          return resolveDispatcher().useOptimistic(passthrough, reducer);
+        };
+        exports.useReducer = function(reducer, initialArg, init) {
+          return resolveDispatcher().useReducer(reducer, initialArg, init);
+        };
+        exports.useRef = function(initialValue) {
+          return resolveDispatcher().useRef(initialValue);
+        };
+        exports.useState = function(initialState) {
+          return resolveDispatcher().useState(initialState);
+        };
+        exports.useSyncExternalStore = function(subscribe, getSnapshot, getServerSnapshot) {
+          return resolveDispatcher().useSyncExternalStore(
+            subscribe,
+            getSnapshot,
+            getServerSnapshot
+          );
+        };
+        exports.useTransition = function() {
+          return resolveDispatcher().useTransition();
+        };
+        exports.version = "19.1.0";
+        "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
+      })();
+    }
+  });
+
+  // node_modules/react/index.js
+  var require_react = __commonJS({
+    "node_modules/react/index.js"(exports, module) {
+      "use strict";
+      if (false) {
+        module.exports = null;
+      } else {
+        module.exports = require_react_development();
+      }
+    }
+  });
+
+  // <stdin>
+  var require_stdin = __commonJS({
+    "<stdin>"(exports, module) {
+      var React = require_react();
+      function createErrorBoundary() {
+        return class ErrorBoundary extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = {
+              hasError: false,
+              error: null,
+              errorInfo: null,
+              isCopied: false,
+              isMinimized: false,
+              isFullWidth: true,
+              copyButtonState: "default"
+            };
+            this.copyErrorToClipboard = this.copyErrorToClipboard.bind(this);
+            this.toggleMinimize = this.toggleMinimize.bind(this);
+            this.toggleFullWidth = this.toggleFullWidth.bind(this);
+          }
+          static getDerivedStateFromError(error) {
+            return {
+              hasError: true,
+              error,
+              errorInfo: null,
+              isCopied: false,
+              isMinimized: false,
+              // Start expanded when error occurs
+              isFullWidth: false,
+              copyButtonState: "default"
+            };
+          }
+          componentDidCatch(error, errorInfo) {
+            this.setState({
+              error,
+              errorInfo
+            });
+            console.error("Error caught by ErrorBoundary:", error, errorInfo);
+          }
+          copyErrorToClipboard() {
+            if (this.state.error) {
+              const errorText = `Error: ${this.state.error.toString()}
+
+Component Stack:
+${this.state.errorInfo ? this.state.errorInfo.componentStack : "Not available"}`;
+              const fallbackCopyTextToClipboard = (text) => {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.position = "fixed";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                  const successful = document.execCommand("copy");
+                  const msg = successful ? "Text copied to clipboard" : "Failed to copy text";
+                  console.log(msg);
+                  this.setState({
+                    isCopied: successful,
+                    copyButtonState: successful ? "copied" : "default"
+                  });
+                  if (successful) {
+                    setTimeout(() => {
+                      this.setState({
+                        isCopied: false,
+                        copyButtonState: "default"
+                      });
+                    }, 2e3);
+                  }
+                } catch (err) {
+                  console.error("Fallback: Failed to copy text: ", err);
+                } finally {
+                  document.body.removeChild(textArea);
+                }
+              };
+              if (!navigator.clipboard) {
+                fallbackCopyTextToClipboard(errorText);
+                return;
+              }
+              navigator.clipboard.writeText(errorText).then(() => {
+                this.setState({
+                  isCopied: true,
+                  copyButtonState: "copied"
+                });
+                setTimeout(() => {
+                  this.setState({
+                    isCopied: false,
+                    copyButtonState: "default"
+                  });
+                }, 2e3);
+              }).catch((err) => {
+                console.error("Failed to copy error details:", err);
+                fallbackCopyTextToClipboard(errorText);
+              });
+            }
+          }
+          toggleMinimize() {
+            this.setState((prevState) => ({
+              isMinimized: !prevState.isMinimized,
+              // If minimizing, ensure it's not full width
+              isFullWidth: prevState.isMinimized ? prevState.isFullWidth : false
+            }));
+          }
+          toggleFullWidth() {
+            if (!this.state.isMinimized) {
+              this.setState((prevState) => ({
+                isFullWidth: !prevState.isFullWidth
+              }));
+            }
+          }
+          render() {
+            if (this.state.hasError) {
+              const { isMinimized, isFullWidth, isCopied, error, errorInfo } = this.state;
+              const AlertTriangleIcon = (_a) => {
+                var _b = _a, { className } = _b, otherProps = __objRest(_b, ["className"]);
+                return /* @__PURE__ */ React.createElement(
+                  "svg",
+                  __spreadValues({
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: isMinimized ? "16" : "20",
+                    height: isMinimized ? "16" : "20",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    strokeWidth: "2",
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    className: className || "text-red-500 dark:text-red-400"
+                  }, otherProps),
+                  /* @__PURE__ */ React.createElement("path", { d: "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
+                  /* @__PURE__ */ React.createElement("line", { x1: "12", y1: "9", x2: "12", y2: "13" }),
+                  /* @__PURE__ */ React.createElement("line", { x1: "12", y1: "17", x2: "12.01", y2: "17" })
+                );
+              };
+              const CopyIcon = () => /* @__PURE__ */ React.createElement(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "16",
+                  height: "16",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                },
+                /* @__PURE__ */ React.createElement("rect", { x: "9", y: "9", width: "13", height: "13", rx: "2", ry: "2" }),
+                /* @__PURE__ */ React.createElement("path", { d: "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" })
+              );
+              const MinimizeIcon = () => /* @__PURE__ */ React.createElement(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "16",
+                  height: "16",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                },
+                /* @__PURE__ */ React.createElement("line", { x1: "5", y1: "12", x2: "19", y2: "12" })
+              );
+              const ExpandIcon = () => /* @__PURE__ */ React.createElement(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "16",
+                  height: "16",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                },
+                /* @__PURE__ */ React.createElement("polyline", { points: "15 3 21 3 21 9" }),
+                /* @__PURE__ */ React.createElement("polyline", { points: "9 21 3 21 3 15" }),
+                /* @__PURE__ */ React.createElement("line", { x1: "21", y1: "3", x2: "14", y2: "10" }),
+                /* @__PURE__ */ React.createElement("line", { x1: "3", y1: "21", x2: "10", y2: "14" })
+              );
+              const CompressIcon = () => /* @__PURE__ */ React.createElement(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "16",
+                  height: "16",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                },
+                /* @__PURE__ */ React.createElement("polyline", { points: "4 14 10 14 10 20" }),
+                /* @__PURE__ */ React.createElement("polyline", { points: "20 10 14 10 14 4" }),
+                /* @__PURE__ */ React.createElement("line", { x1: "14", y1: "10", x2: "21", y2: "3" }),
+                /* @__PURE__ */ React.createElement("line", { x1: "3", y1: "21", x2: "10", y2: "14" })
+              );
+              const RefreshIcon = () => /* @__PURE__ */ React.createElement(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "16",
+                  height: "16",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                },
+                /* @__PURE__ */ React.createElement("path", { d: "M23 4v6h-6" }),
+                /* @__PURE__ */ React.createElement("path", { d: "M1 20v-6h6" }),
+                /* @__PURE__ */ React.createElement("path", { d: "M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" })
+              );
+              const CheckIcon = () => /* @__PURE__ */ React.createElement(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "14",
+                  height: "14",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round"
+                },
+                /* @__PURE__ */ React.createElement("path", { d: "M20 6L9 17l-5-5" })
+              );
+              if (isMinimized) {
+                return /* @__PURE__ */ React.createElement(React.Fragment, null, this.props.children, /* @__PURE__ */ React.createElement(
+                  "div",
+                  {
+                    className: "fixed bottom-4 right-4 z-[9999]",
+                    onClick: this.toggleMinimize
+                  },
+                  /* @__PURE__ */ React.createElement("div", { className: "group flex items-center justify-center w-10 h-10 rounded-full bg-red-500 shadow-lg cursor-pointer hover:bg-red-600 transition-colors dark:bg-red-700 dark:hover:bg-red-600" }, /* @__PURE__ */ React.createElement(AlertTriangleIcon, { className: "text-white dark:text-gray-100" }), /* @__PURE__ */ React.createElement("div", { className: "absolute right-12 bottom-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap dark:bg-gray-900 shadow-md" }, "Error - Click to expand"))
+                ));
+              }
+              const baseContainerClasses = "fixed bottom-0 z-[9999] transition-all duration-300 ease-in-out mb-8";
+              const innerBoxBaseClasses = "relative overflow-hidden rounded-lg border border-red-300 bg-white shadow-xl dark:border-red-700 dark:bg-gray-950";
+              const positionAndWidthClass = isFullWidth ? "inset-x-0 w-full" : "right-4 w-[32rem] max-w-[90vw]";
+              const paddingClass = isFullWidth ? "p-4" : "";
+              return /* @__PURE__ */ React.createElement(React.Fragment, null, this.props.children, /* @__PURE__ */ React.createElement("div", { className: `${baseContainerClasses} ${positionAndWidthClass} ${paddingClass}` }, /* @__PURE__ */ React.createElement(
+                "div",
+                {
+                  className: `${innerBoxBaseClasses} ${isFullWidth ? "mx-auto" : ""}`,
+                  style: isFullWidth ? { maxWidth: "100%" } : {}
+                },
+                /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between bg-gradient-to-r from-red-100 to-red-200 px-3 py-2 dark:from-red-950/50 dark:to-red-900/50" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(AlertTriangleIcon, { className: "text-red-500 dark:text-red-400" }), /* @__PURE__ */ React.createElement("h3", { className: "text-sm font-semibold text-red-800 dark:text-red-300" }, "Sorry, something went wrong")), /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ React.createElement(
+                  "button",
+                  {
+                    onClick: () => window.location.reload(),
+                    className: "rounded p-1 text-gray-600 hover:bg-red-200/50 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-red-800/50 dark:hover:text-gray-200 transition-colors",
+                    title: "Refresh page"
+                  },
+                  /* @__PURE__ */ React.createElement(RefreshIcon, null)
+                ), /* @__PURE__ */ React.createElement(
+                  "button",
+                  {
+                    onClick: this.toggleFullWidth,
+                    className: "rounded p-1 text-gray-600 hover:bg-red-200/50 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-red-800/50 dark:hover:text-gray-200 transition-colors",
+                    title: isFullWidth ? "Reduce width" : "Expand to full width"
+                  },
+                  isFullWidth ? /* @__PURE__ */ React.createElement(CompressIcon, null) : /* @__PURE__ */ React.createElement(ExpandIcon, null)
+                ), /* @__PURE__ */ React.createElement(
+                  "button",
+                  {
+                    onClick: this.toggleMinimize,
+                    className: "rounded p-1 text-gray-600 hover:bg-red-200/50 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-red-800/50 dark:hover:text-gray-200 transition-colors",
+                    title: "Minimize"
+                  },
+                  /* @__PURE__ */ React.createElement(MinimizeIcon, null)
+                ))),
+                /* @__PURE__ */ React.createElement("div", { className: "p-4" }, /* @__PURE__ */ React.createElement("div", { className: "mb-3" }, /* @__PURE__ */ React.createElement("p", { className: "text-sm text-gray-700 dark:text-gray-300" }, "You can copy the error details and ask Gemini to fix the error.")), /* @__PURE__ */ React.createElement(
+                  "div",
+                  {
+                    className: `overflow-auto rounded bg-gray-50 p-3 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 scrollbar-none ${isFullWidth ? "max-h-[40vh]" : "max-h-60"}`
+                  },
+                  /* @__PURE__ */ React.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React.createElement("div", { className: "space-y-1" }, /* @__PURE__ */ React.createElement("h4", { className: "text-xs uppercase font-semibold text-gray-500 dark:text-gray-400" }, "Error Message:"), /* @__PURE__ */ React.createElement("p", { className: "font-mono text-xs text-red-700 dark:text-red-400 break-words px-2 py-1.5 bg-red-50 dark:bg-red-900/30 rounded border border-red-100 dark:border-red-900/50" }, error ? error.toString() : "No error message available.")), errorInfo && /* @__PURE__ */ React.createElement("div", { className: "space-y-1" }, /* @__PURE__ */ React.createElement("h4", { className: "text-xs uppercase font-semibold text-gray-500 dark:text-gray-400" }, "Component Stack:"), /* @__PURE__ */ React.createElement("pre", { className: "whitespace-pre-wrap font-mono text-xs text-gray-700 dark:text-gray-300 px-2 py-1.5 bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700" }, errorInfo.componentStack)))
+                ), /* @__PURE__ */ React.createElement("div", { className: "mt-4" }, /* @__PURE__ */ React.createElement(
+                  "button",
+                  {
+                    onClick: this.copyErrorToClipboard,
+                    className: `flex items-center justify-center gap-2 px-4 py-2 text-white rounded-md transition-colors w-full ${this.state.copyButtonState === "copied" ? "bg-blue-600 hover:bg-blue-700" : "bg-indigo-600 hover:bg-indigo-700"}`
+                  },
+                  this.state.copyButtonState === "copied" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(CheckIcon, null), "Copied to Clipboard!") : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(CopyIcon, null), "Copy Error Details")
+                )))
+              )));
+            }
+            return this.props.children;
+          }
+        };
+      }
+      module.exports = { createErrorBoundary };
+    }
+  });
+  return require_stdin();
+})();
+
+
+
+                // Use the exported createErrorBoundary function
+                const ErrorBoundary = ErrorBoundaryModule.createErrorBoundary();
+
+                const AppComponent = React.createElement(
+                    ErrorBoundary,
+                    null,
+                    React.createElement(App.default, null)
+                );
+                root.render(AppComponent);
+            });
+        </script>
+    
+
+</body>
+</html>
